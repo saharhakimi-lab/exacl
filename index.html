@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extended Access Control List (ACL) | סימולטור פקודות והגנת סייבר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght=400;500;600;700;800&family=Fira+Code:wght=400;500;600&display=swap" rel="stylesheet">
+<!-- Tailwind CSS for help modal styling -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --bg:#0A0E17; --panel:#121824; --panel2:#1C2336; --panel3:#252F48;
+  --border:#222F47; --border2:#344668;
+  --text:#E2E8F0; --muted:#94A3B8; --muted2:#64748B;
+  --acl-deny:#EF4444; --acl-deny-dim:rgba(239,68,68,0.15);
+  --acl-permit:#10B981; --acl-permit-dim:rgba(16,185,129,0.15);
+  --cyber-purple:#8B5CF6; --cyber-blue:#3B82F6;
+  --gold:#F59E0B;
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:'Rubik',sans-serif; line-height:1.6;
+  padding-bottom:140px;
+}
+.mono{font-family:'Fira Code',monospace;}
+.wrap{max-width:1100px; margin:0 auto; padding:0 20px;}
+h1,h2,h3{font-weight:700; margin:0 0 8px;}
+p{margin:0 0 12px; color:var(--muted);}
+
+/* סרגל התקדמות עליון */
+.progressbar{position:sticky; top:0; z-index:150; background:rgba(10,14,23,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:14px 20px;}
+.progressbar-inner{max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:14px;}
+.progressbar-title{font-weight:700; font-size:15px; white-space:nowrap; color:#FFFFFF;}
+.steps{display:flex; gap:6px; flex:1;}
+.step{flex:1; height:6px; border-radius:4px; background:var(--panel3); position:relative; overflow:hidden;}
+.step.done{background:var(--acl-permit);}
+.step.active{background:var(--cyber-blue);}
+.progress-pct{font-size:13px; color:var(--muted); font-family:'Fira Code',monospace; white-space:nowrap;}
+
+/* עיצוב כותרת ראשית */
+header.hero{padding:60px 0 30px; border-bottom:1px solid var(--border); position:relative;}
+.eyebrow{display:inline-block; font-family:'Fira Code',monospace; font-size:12px; letter-spacing:1px; color:var(--cyber-purple); background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.3); padding:5px 14px; border-radius:20px; margin-bottom:18px;}
+h1.title{font-size:42px; margin-bottom:12px; color:#FFFFFF; letter-spacing:-0.5px;}
+h1.title span{color:var(--cyber-purple); text-shadow:0 0 15px rgba(139,92,246,0.4);}
+.subtitle{font-size:16px; max-width:750px; margin:0; color:var(--muted);}
+
+section{padding:50px 0; border-top:1px solid var(--border);}
+.section-head{margin-bottom:26px;}
+.section-num{font-family:'Fira Code',monospace; color:var(--muted2); font-size:13px; margin-bottom:6px;}
+.section-title{font-size:24px; color:#FFFFFF;}
+
+.card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+@media(max-width:720px){.grid2{grid-template-columns:1fr;}}
+
+.concept-card{border-right:4px solid var(--cyber-purple); background:linear-gradient(to left, var(--panel), #141B29);}
+.tag{display:inline-block; font-family:'Fira Code',monospace; font-size:11px; padding:3px 8px; border-radius:6px; margin:2px 4px 2px 0;}
+.tag.deny{background:var(--acl-deny-dim); color:var(--acl-deny);}
+.tag.permit{background:var(--acl-permit-dim); color:var(--acl-permit);}
+.tag.purple{background:rgba(139,92,246,0.15); color:var(--cyber-purple);}
+
+/* אקורדיון שאלות חשיבה */
+.accordion{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:12px;}
+.acc-head{padding:16px 18px; background:var(--panel); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600;}
+.acc-head:hover{background:var(--panel2);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; background:var(--panel);}
+.acc-body-inner{padding:0 18px 18px;}
+.accordion.open .acc-body{max-height:600px;}
+.acc-arrow{transition:transform .3s; color:var(--muted);}
+.accordion.open .acc-arrow{transform:rotate(180deg);}
+
+/* אזור דיאגרמת ה-Acl המורחבת */
+.diagram-wrap{background:#070A10; border:2px solid var(--border); border-radius:var(--radius); padding:30px; overflow-x:auto; margin-top:20px; position:relative;}
+.node-box{cursor:pointer; transition:transform 0.2s, opacity 0.15s;}
+.node-box:hover{opacity:0.95; transform:scale(1.01); fill-opacity:0.9;}
+.controls-row{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:20px;}
+button.btn{background:var(--cyber-purple); color:#FFFFFF; border:none; border-radius:8px; padding:12px 22px; font-family:'Rubik'; font-weight:600; font-size:15px; cursor:pointer; transition:transform .1s, opacity .15s;}
+button.btn:hover{opacity:0.9; box-shadow:0 0 12px rgba(139,92,246,0.4);}
+button.btn:active{transform:scale(0.97);}
+button.btn.secondary{background:var(--panel3); color:var(--text); border:1px solid var(--border2);}
+button.btn.danger{background:var(--acl-deny);}
+
+.log-panel{background:#04060A; border:1px solid var(--border); border-radius:10px; margin-top:16px; padding:16px; font-family:'Fira Code',monospace; font-size:13px; max-height:240px; overflow-y:auto; color:#A1B0CB; border-left:3px solid var(--cyber-blue);}
+.log-line{margin-bottom:8px; animation:fadeIn .3s ease;}
+.log-line .lbl{color:var(--cyber-purple); font-weight:bold;}
+
+/* טרמינל הגדרות ה-Cisco */
+.terminal{background:#05070B; border:1px solid var(--cyber-purple); border-radius:10px; padding:18px; font-family:'Fira Code',monospace; font-size:13px; box-shadow:0 4px 20px rgba(0,0,0,0.5);}
+.term-topbar{display:flex; gap:6px; margin-bottom:12px; align-items:center;}
+.dot{width:10px; height:10px; border-radius:50%;}
+.dot.r{background:#EF4444;} .dot.y{background:#F59E0B;} .dot.g{background:#10B981;}
+.term-output{white-space:pre-wrap; color:#94A3B8; margin-bottom:10px; min-height:60px; line-height:1.7;}
+.term-output .ok{color:#10B981; font-weight:bold;}
+.term-output .bad{color:#EF4444; font-weight:bold;}
+.term-output .hint{color:#F59E0B;}
+.term-input-row{display:flex; align-items:center; gap:6px; border-top:1px solid var(--border); padding-top:12px;}
+.prompt{color:#10B981; white-space:nowrap;}
+input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; font-family:'Fira Code',monospace; font-size:13px; outline:none;}
+
+.task-box{background:var(--panel2); border:1px solid var(--border2); border-radius:10px; padding:14px 16px; margin-bottom:14px;}
+.task-title{font-weight:600; margin-bottom:4px; color:var(--gold);}
+.task-progress{font-family:'Fira Code',monospace; font-size:12px; color:var(--muted);}
+
+/* מערכת חידון אולטרה-מודרנית */
+.quiz-q{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px;}
+.quiz-q-num{font-family:'Fira Code',monospace; color:var(--muted2); font-size:12px; margin-bottom:6px;}
+.quiz-opts{display:flex; flex-direction:column; gap:10px; margin-top:14px;}
+.quiz-opt{background:var(--panel3); border:1px solid var(--border2); border-radius:8px; padding:14px; cursor:pointer; text-align:right; font-size:14px; transition:all 0.15s;}
+.quiz-opt:hover{border-color:var(--muted); background:var(--panel2);}
+.quiz-opt.correct{background:rgba(16,185,129,0.15); border-color:var(--acl-permit); color:var(--acl-permit); font-weight:600;}
+.quiz-opt.wrong{background:rgba(239,68,68,0.15); border-color:var(--acl-deny); color:var(--acl-deny); font-weight:600;}
+.quiz-opt.disabled{pointer-events:none;}
+.quiz-explain{margin-top:12px; padding:12px; background:var(--panel2); border-radius:8px; font-size:13px; display:none; border-right:3px solid var(--gold);}
+.quiz-explain.show{display:block;}
+
+.completion{text-align:center; padding:50px 20px; background:linear-gradient(135deg, #111827, #062F22); border:2px solid var(--acl-permit); border-radius:var(--radius); display:none; margin-top:30px; box-shadow:0 0 20px rgba(16,185,129,0.2);}
+.completion.show{display:block;}
+
+.footer-note{text-align:center; color:var(--muted2); font-size:12px; margin-top:60px;}
+::-webkit-scrollbar{width:8px; height:8px;}
+::-webkit-scrollbar-thumb{background:var(--border2); border-radius:4px;}
+@keyframes fadeIn { from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);} }
+</style>
+</head>
+<body>
+
+<div class="progressbar">
+  <div class="progressbar-inner">
+    <div class="progressbar-title">🛡️ מערך אבטחה: Extended ACL</div>
+    <div class="steps" id="stepsBar"></div>
+    <div class="progress-pct" id="progressPct">0%</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">Cyber Security Architecture · Layer 3 & 4 Protection</div>
+    <h1 class="title">בקרת גישה מורחבת <span>(Extended ACL)</span></h1>
+    <p class="subtitle">הפוך למגן הרשת הארגונית. למד כיצד לסנן, לחסום ולאפשר תעבורה מדויקת על בסיס כתובות IP של מקור ויעד, סוג הפרוטוקול ומספרי הפורטים בשכבת התעבורה.</p>
+  </div>
+</header>
+
+<section id="s1">
+<div class="section-head">
+  <div class="section-num">01 — חוקי הסינון המתקדמים</div>
+  <h2 class="section-title">הכוח שבדיוק: מהי רשימת גישה מורחבת?</h2>
+</div>
+
+<div class="grid2">
+  <div class="card concept-card">
+    <h3>🎯 יכולות הסינון המורחב</h3>
+    <p><span class="tag purple">מספרי זיהוי 100-199</span> טווח ה-ACL הקלאסי ב-Cisco עבור רשימות מורחבות.</p>
+    <p><span class="tag permit">בקרת שכבה 4</span> היכולת לסנן לפי פרוטוקולי <b>TCP</b> ו-<b>UDP</b> ולפי פורטים ספציפיים (כמו 80, 443, 22, 23).</p>
+  </div>
+  <div class="card concept-card">
+    <h3>⚡ סדר החוקים והחוק הסמוי</h3>
+    <p><span class="tag deny">Implicit Deny</span> כל חבילה שלא תואמת אף חוק ברשימה – <b>נחסמת אוטומטית</b> בסוף הדרך!</p>
+    <p><span class="tag purple">First Match Win</span> הנתב קורא מלמעלה למטה; החוק הראשון שתואם לחבילה מופעל מיד, והסריקה נפסקת.</p>
+  </div>
+</div>
+</section>
+
+<section id="s2">
+<div class="section-head">
+  <div class="section-num">02 — ארכיטקטורת חוקים נכונה</div>
+  <h2 class="section-title">שאלות קריטיות בעיצוב חומת אש</h2>
+</div>
+
+<div id="acc1" class="accordion">
+  <div class="acc-head" onclick="toggleAcc('acc1')"><span>היכן מומלץ למקם Extended ACL ברשת?</span><span class="acc-arrow">▾</span></div>
+  <div class="acc-body"><div class="acc-body-inner">
+    <p>רשימת גישה מורחבת ממוקמת <b>קרוב ככל הניתן למקור התעבורה (Closest to the Source)</b>. מכיוון שהיא מכילה גם את כתובת היעד, אנחנו רוצים שהנתב יחסום את התעבורה האסורה מיד בכניסה, לפני שהוא מבזבז משאבי רוחב פס וניתוב כדי להעביר אותה ברשת.</p>
+  </div></div>
+</div>
+
+<div id="acc2" class="accordion">
+  <div class="acc-head" onclick="toggleAcc('acc2')"><span>מה תפקיד המילה המפתח 'established' בחוק ACL?</span><span class="acc-arrow">▾</span></div>
+  <div class="acc-body"><div class="acc-body-inner">
+    <p>הפרמטר `established` מאפשר רק לתעבורת TCP <b>שהחלה מתוך הרשת הפנימית</b> לחזור פנימה. הוא חוסם בקשות TCP חדשות שמגיעות מבחוץ, ובכך מגן על תחנות הקצה מפני יוזמות התחברות עוינות.</p>
+  </div></div>
+</div>
+</section>
+
+<section id="s3">
+<div class="section-head">
+  <div class="section-num">03 — סימולטור הגנה חיוני</div>
+  <h2 class="section-title">הפעל חבילות ועקוב אחר פעולת הנתב בזמן אמת</h2>
+</div>
+<p>בחר סוג חבילה מהכפתורים למטה כדי לראות אם חוקי ה-ACL שהגדרת בנתב הליבה מאשרים או חוסמים את המידע.</p>
+
+<div class="diagram-wrap">
+<svg id="aclDiagram" viewBox="0 0 1000 520" style="width:100%; display:block;">
+  
+  <line x1="180" y1="120" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
+  <line x1="180" y1="420" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
+  <line x1="820" y1="280" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
+
+  <g class="node-box" onclick="testPacket('Mgmt')">
+    <rect x="50" y="50" width="220" height="110" rx="8" fill="#121824" stroke="#3B82F6" stroke-width="2"/>
+    <circle cx="85" cy="85" r="14" fill="#252F48"/>
+    <text x="85" y="90" text-anchor="middle" fill="#3B82F6" font-size="12" font-weight="bold">M</text>
+    <text x="235" y="88" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">תחנת הנהלה (VLAN 10)</text>
+    <text x="200" y="125" fill="#94A3B8" font-family="Fira Code" font-size="12">IP: 10.10.10.50</text>
+    <text x="200" y="142" fill="#64748B" font-family="Fira Code" font-size="11">Sec Level: High</text>
+  </g>
+
+  <g class="node-box" onclick="testPacket('Guest')">
+    <rect x="50" y="360" width="220" height="110" rx="8" fill="#121824" stroke="#EF4444" stroke-width="2"/>
+    <circle cx="85" cy="395" r="14" fill="#252F48"/>
+    <text x="85" y="400" text-anchor="middle" fill="#EF4444" font-size="12" font-weight="bold">G</text>
+    <text x="235" y="398" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">רשת אורחים (VLAN 20)</text>
+    <text x="200" y="435" fill="#94A3B8" font-family="Fira Code" font-size="12">IP: 10.20.20.99</text>
+    <text x="200" y="452" fill="#64748B" font-family="Fira Code" font-size="11">Sec Level: Low</text>
+  </g>
+
+  <g transform="translate(430, 220)">
+    <circle cx="70" cy="60" r="45" fill="#1C2336" stroke="#8B5CF6" stroke-width="3"/>
+    <path d="M 45 60 L 95 60 M 83 50 L 95 60 L 83 70" stroke="#8B5CF6" stroke-width="2.5" fill="none"/>
+    <path d="M 95 60 L 45 60 M 57 50 L 45 60 L 57 70" stroke="#8B5CF6" stroke-width="2.5" fill="none"/>
+    <text x="70" y="125" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">Router_Core</text>
+    <text x="270" y="142" text-anchor="middle" fill="#8B5CF6" font-family="Fira Code" font-size="11">ACL 101 Active</text>
+  </g>
+
+  <g class="node-box" onclick="testPacket('Server')">
+    <rect x="710" y="220" width="240" height="120" rx="8" fill="#121824" stroke="#10B981" stroke-width="2"/>
+    <rect x="735" y="240" width="24" height="30" rx="3" fill="#252F48" stroke="#10B981" stroke-width="1.5"/>
+    <text x="875" y="258" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">חוות שרתים (DMZ)</text>
+    <text x="875" y="295" fill="#94A3B8" font-family="Fira Code" font-size="12">IP Target: 172.16.50.10</text>
+    <text x="875" y="312" fill="#64748B" font-family="Fira Code" font-size="11">Allowed: HTTP (80), SSH (22)</text>
+  </g>
+
+  <g id="aclPacket" style="display:none;">
+    <circle r="12" fill="#8B5CF6" stroke="#FFFFFF" stroke-width="2"/>
+    <text id="aclPacketLabel" y="4" text-anchor="middle" fill="#FFFFFF" font-family="Fira Code" font-size="9" font-weight="800">IP</text>
+  </g>
+</svg>
+
+<div class="controls-row">
+  <span id="aclInfo" style="color:var(--muted); font-size:14px;">בחר אחד מנתיבי התעבורה לבדיקת חוקי ה-Extended ACL...</span>
+</div>
+<div class="controls-row">
+  <button class="btn" onclick="triggerAclTest('Mgmt-SSH')">הנהלה ➔ שרת (SSH - Port 22) 🔐</button>
+  <button class="btn" onclick="triggerAclTest('Guest-Web')">אורחים ➔ שרת (Web - Port 80) 🌐</button>
+  <button class="btn danger" onclick="triggerAclTest('Guest-SSH')">אורחים ➔ שרת (SSH - Port 22) ❌</button>
+  <button class="btn secondary" onclick="resetAclSim()">אתחל מערכת</button>
+</div>
+<div class="log-panel" id="aclLog">
+  <div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>
+</div>
+</div>
+</section>
+
+<section id="s4">
+<div class="section-head">
+  <div class="section-num">04 — זירת הפיקוד המעשית (CLI)</div>
+  <h2 class="section-title">כתוב את פקודות ההגנה בנתב הארגוני</h2>
+</div>
+<p>המשימה: הגדר רשימת גישה מספר 101 שתחסום לחלוטין גישת SSH (פורט 22) מרשת האורחים (10.20.20.0/24) לחוות השרתים, אך תאשר להם גלישת אינטרנט (פורט 80).</p>
+
+<div class="task-box">
+  <div class="task-title">יעד הגנה: חסימת פורט 22 מרשת 10.20.20.0/24 ליעד 172.16.50.10</div>
+  <div class="task-progress" id="taskProgress">שלב 1 מתוך 3</div>
+</div>
+
+<div class="terminal">
+  <div class="term-topbar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span style="margin-right:8px; color:var(--muted2); font-size:12px;">Core-Router-Firewall#</span></div>
+  <div class="term-output" id="termOutput">Core-Router> enable
+Core-Router# configure terminal
+Core-Router(config)# <span class="hint">שלב 1: הקלד את חוק החסימה המדויק: access-list 101 deny tcp 10.20.20.0 0.0.0.255 host 172.16.50.10 eq 22</span></div>
+  <div class="term-input-row">
+    <span class="prompt" id="termPrompt">Core-Router(config)#</span>
+    <input type="text" class="term-input" id="termInput" placeholder="הקלד פקודת Extended ACL מלאה..." onkeydown="if(event.key==='Enter')submitAclCmd()">
+  </div>
+</div>
+</section>
+
+<section id="s5">
+<div class="section-head">
+  <div class="section-num">05 — מבחן הסמכת סייבר</div>
+  <h2 class="section-title">הוכח הבנה ארכיטקטונית</h2>
+</div>
+<div id="quizContainer"></div>
+</section>
+
+<div class="completion" id="completionBox">
+  <h2>🏆 אלוף סייבר! הגנת על הרשת הארגונית במלואה!</h2>
+  <p>השלמת את מעבדת ה-Extended ACL. הכלים שכתבת מונעים פריצות ומאפשרים עבודה חלקה ומאובטחת.</p>
+</div>
+
+<div class="footer-note">מערכת סימולציה אינטראקטיבית — הנדסת רשתות ואבטחת מידע 2026</div>
+</div>
+
+<!-- כפתור עזרה צף קבוע בפינה התחתונה עם אווטר מובנה -->
+<div class="fixed bottom-6 left-6 z-50 no-print">
+    <button id="openHelpModalBtn" class="flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg shadow-cyan-500/20 transition-all duration-300 transform hover:scale-105 group border border-cyan-400/30">
+        <!-- אווטר קטן בתוך הכפתור -->
+        <div class="w-8 h-8 rounded-full border border-white/40 overflow-hidden bg-slate-950 flex-shrink-0 shadow-inner">
+            <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="אווטר בוט עזרה" class="w-full h-full object-cover">
+        </div>
+        <span>בוט עזרה</span>
+    </button>
+</div>
+
+<!-- חלונית עזרה צפה (Modal) עם אווטר מורחב -->
+<div id="helpModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 transition-all duration-300">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full text-center relative shadow-2xl shadow-cyan-500/5 transform scale-95 transition-transform duration-300" id="helpModalContent">
+        <!-- כפתור סגירה X -->
+        <button id="closeHelpModalBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-slate-800">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        
+        <!-- אווטר התמונה בחלונית -->
+        <div class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-cyan-400/50 p-1 bg-slate-950 shadow-lg shadow-cyan-500/20 overflow-hidden">
+            <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="תמונת בוט עזרה" class="w-full h-full object-cover rounded-full">
+        </div>
+
+        <h3 class="text-lg font-black text-white mb-2">צריך עזרה במשימה?</h3>
+        <p class="text-sm text-slate-400 mb-6 leading-relaxed">בוט העזרה הרשמי של האקדמיה זמין כעת כדי לענות על שאלות, להסביר מושגים ולכוון אותך לפתרון המלא!</p>
+        
+        <!-- כפתור הפניה לקישור הבוט -->
+        <a href="https://gemini.google.com/gem/167016ac4a4b/66c3b83daa7940ef?usp=sharing" target="_blank" class="w-full flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-black py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/10">
+            <span>הפעל את בוט העזרה</span>
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+        </a>
+    </div>
+</div>
+
+<script>
+const PROGRESS_KEY = "acl_progress_v1";
+const stepIds = ["s1","s2","s3","s4","s5"];
+let progress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}");
+
+function renderStepsBar(){
+  const bar = document.getElementById("stepsBar");
+  if(!bar) return;
+  bar.innerHTML = "";
+  stepIds.forEach(id=>{
+    const d = document.createElement("div");
+    d.className = "step" + (progress[id] ? " done" : "");
+    bar.appendChild(d);
+  });
+  const done = stepIds.filter(id=>progress[id]).length;
+  document.getElementById("progressPct").textContent = Math.round(done/stepIds.length*100) + "%";
+  if(done === stepIds.length){
+    document.getElementById("completionBox").classList.add("show");
+  }
+}
+function markDone(id){
+  progress[id] = true;
+  localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+  renderStepsBar();
+}
+renderStepsBar();
+
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting && e.intersectionRatio > 0.4){
+      markDone(e.target.id);
+    }
+  });
+}, {threshold:0.4});
+stepIds.forEach(id=>{ const el = document.getElementById(id); if(el) io.observe(el); });
+
+function toggleAcc(id){
+  document.getElementById(id).classList.toggle("open");
+}
+
+// קואורדינטות קבועות בדיאגרמת ה-ACL ללא שום חפיפות
+const nodes = {
+  Mgmt: { x: 180, y: 120 },
+  Guest: { x: 180, y: 420 },
+  Router: { x: 500, y: 280 },
+  Server: { x: 710, y: 280 }
+};
+
+async function animateAclPkt(x1, y1, x2, y2, color, label, duration) {
+  const pkt = document.getElementById("aclPacket");
+  const circ = pkt.querySelector("circle");
+  const txt = document.getElementById("aclPacketLabel");
+  circ.setAttribute("fill", color);
+  txt.textContent = label;
+  pkt.style.display = "block";
+  
+  const steps = 30;
+  for(let i=0; i<=steps; i++){
+    const t = i/steps;
+    const cx = x1 + (x2 - x1)*t;
+    const cy = y1 + (y2 - y1)*t;
+    pkt.setAttribute("transform", `translate(${cx}, ${cy})`);
+    await new Promise(r => setTimeout(r, duration / steps));
+  }
+}
+
+async function triggerAclTest(type) {
+  const info = document.getElementById("aclInfo");
+  const logBox = document.getElementById("aclLog");
+  logBox.innerHTML = "";
+  
+  if(type === 'Mgmt-SSH') {
+    info.innerHTML = "סטטוס: בודק תעבורת <b style='color:#3B82F6'>SSH מ-VLAN 10</b>...";
+    log("<span class='lbl'>[שילוח]</span> חבילת TCP מכתובת 10.10.10.50 אל פורט 22 בשרת יוצאת לדרך.");
+    await animateAclPkt(nodes.Mgmt.x, nodes.Mgmt.y, nodes.Router.x, nodes.Router.y, "#3B82F6", "SSH", 700);
+    
+    log("<span class='lbl'>[בדיקת ACL]</span> הנתב בודק חוקים: התאמה לחוק היתר הנהלה! החבילה מאושרת (Permit).");
+    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", 700);
+    log("<span class='lbl'>[הצלחה]</span> החיבור המאובטח הוקם בהצלחה מול חוות השרתים.");
+  } 
+  else if(type === 'Guest-Web') {
+    info.innerHTML = "סטטוס: בודק תעבורת <b style='color:#10B981'>HTTP מ-VLAN 20</b>...";
+    log("<span class='lbl'>[שילוח]</span> בקשת דף אינטרנט מכתובת האורח 10.20.20.99 אל פורט 80.");
+    await animateAclPkt(nodes.Guest.x, nodes.Guest.y, nodes.Router.x, nodes.Router.y, "#10B981", "HTTP", 700);
+    
+    log("<span class='lbl'>[בדיקת ACL]</span> הנתב מזהה יעד פורט 80 ומאשר מעבר אורחים לצורך דפדוף בלבד.");
+    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", 700);
+    log("<span class='lbl'>[הצלחה]</span> דף ה-Web נטען בהצלחה במחשב האורח.");
+  }
+  else if(type === 'Guest-SSH') {
+    info.innerHTML = "סטטוס: בודק תעבורת <b style='color:#EF4444'>SSH אסורה מ-VLAN 20</b>...";
+    log("<span class='lbl'>[התרעה]</span> מחשב אורח מנסה ליזום חיבור SSH (פורט 22) לרכיבי הליבה!");
+    await animateAclPkt(nodes.Guest.x, nodes.Guest.y, nodes.Router.x, nodes.Router.y, "#EF4444", "SSH", 700);
+    
+    log("<span class='lbl'>[בלימה]</span> הנתב זיהה התאמה לחוק הספציפי: <b style='color:#EF4444'>access-list 101 deny tcp any host eq 22</b>. החבילה נזרקה!");
+    // אנימציית פיצוץ קטנה או הבהוב של החבילה בנתב
+    document.getElementById("aclPacket").style.display = "none";
+    log("<span class='lbl'>[תוצאה]</span> החיבור נחסם (Administratively Denied). נמנעה פריצה.");
+  }
+  markDone("s3");
+}
+
+function resetAclSim() {
+  document.getElementById("aclInfo").textContent = "בחר אחד מנתיבי התעבורה לבדיקת חוקי ה-Extended ACL...";
+  document.getElementById("aclLog").innerHTML = '<div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>';
+  document.getElementById("aclPacket").style.display = "none";
+}
+
+function log(text){
+  const p = document.getElementById("aclLog");
+  const div = document.createElement("div");
+  div.className = "log-line";
+  div.innerHTML = text;
+  p.appendChild(div);
+  p.scrollTop = p.scrollHeight;
+}
+
+// רשת ה-CLI של הראוטר
+const cliSteps = [
+  {expect:/^access-list\s+101\s+deny\s+tcp\s+10\.20\.20\.0\s+0\.0\.0\.255\s+host\s+172\.16\.50\.10\s+eq\s+22\s*$/i, ok:"מעולה! חסמת בצורה מדויקת גישת SSH מרשת האורחים אל השרת המאובטח."},
+  {expect:/^access-list\s+101\s+permit\s+tcp\s+10\.20\.20\.0\s+0\.0\.0\.255\s+host\s+172\.16\.50\.10\s+eq\s+80\s*$/i, ok:"מצוין! אישרת לאורחים לגשת לשירות ה-Web (פורט 80) באותו שרת יעד."},
+  {expect:/^interface\s+g0\/0\s*$/i, ok:"נכנסת לממשק הרלוונטי לצורך החלת החוק האקטיבי (Access-group)."}
+];
+let currentCliStep = 0;
+
+function submitAclCmd() {
+  const input = document.getElementById("termInput");
+  const val = input.value.trim();
+  const output = document.getElementById("termOutput");
+  const prompt = document.getElementById("termPrompt").textContent;
+  if(val==="") return;
+  if(currentCliStep >= cliSteps.length) { input.value=""; return; }
+  
+  const step = cliSteps[currentCliStep];
+  if(step.expect.test(val)) {
+    output.innerHTML += "\n" + prompt + " " + val + "\n<span class='ok'>✔ " + step.ok + "</span>";
+    currentCliStep++;
+    if(currentCliStep < cliSteps.length) {
+      if(currentCliStep === 1) output.innerHTML += "\n<span class='hint'>שלב 2: כעת אפשר לאורחים תעבורת גלישה (Port 80) לאותו יעד</span>";
+      if(currentCliStep === 2) {
+        output.innerHTML += "\n<span class='hint'>שלב 3: כעת היכנס לממשק הגופני GigabitEthernet 0/0 כדי להחיל את ה-ACL</span>";
+        document.getElementById("termPrompt").textContent = "Core-Router(config)#";
+      }
+      document.getElementById("taskProgress").textContent = "שלב " + (currentCliStep+1) + " מתוך " + cliSteps.length;
+    } else {
+      document.getElementById("taskProgress").textContent = "בוצע בהצלחה מלאה! ✅";
+      output.innerHTML += "\nCore-Router(config-if)# ip access-group 101 in\n<span class='ok'>🏆 חומת האש הופעלה וננעלמה בכניסת הממשק!</span>";
+      markDone("s4");
+    }
+  } else {
+    output.innerHTML += "\n" + prompt + " " + val + "\n<span class='bad'>✘ טעות בתחביר פקודת ה-ACL הארגונית. בדוק רווחים, מספרי פורטים ומסכות הפוכות ונסה שוב.</span>";
+  }
+  input.value = "";
+  output.scrollTop = output.scrollHeight;
+}
+
+// מערך חידון הסמכה מובנה
+const quizData = [
+  {
+    q: "מה ההבדל המרכזי בין Standard ACL ל-Extended ACL?",
+    opts: ["Standard בודק רק כתובת IP מקור, בעוד ש-Extended מסוגל לבדוק גם IP יעד, סוג פרוטוקול ומספרי פורטים.", "Standard מיושם רק על נתבי אלחוט ו-Extended על מתגים קשיחים.", "Standard חוסם רק תעבורת אינטרנט ו-Extended חוסם רק דואר אלקטרוני.", "אין שום הבדל ביניהם למעט מספרי הזיהוי."],
+    correct: 0,
+    explain: "רשימת גישה מורחבת (Extended) מעניקה כוח סינון רב יותר מכיוון שהיא מנתחת את שכבות 3 ו-4 במלואן (מקור, יעד ופורט), בשונה מרשימה רגילה שבודקת מקור בלבד."
+  },
+  {
+    q: "אם חבילת מידע מגיעה לנתב ולא תואמת אף שורה ב-Extended ACL שהוגדר, מה יקרה לחבילה?",
+    opts: ["היא תועבר ישירות לשרת ה-DNS הקרוב", "היא תיחסם ותיזרק מיד עקב חוק החסימה הסמוי (Implicit Deny)", "היא תישמר בזיכרון הנתב למשך 24 שעות", "הנתב ייצר עבורה חוק אישור חדש באופן אוטומטי"],
+    correct: 1,
+    explain: "בסוף כל רשימת גישה קיים חוק חסימה מוחלט וסמוי. אם החבילה לא ענתה על אף תנאי קודם - היא מושמדת."
+  }
+];
+
+function renderQuiz(){
+  const container = document.getElementById("quizContainer");
+  if(!container) return;
+  quizData.forEach((item, qi)=>{
+    const qDiv = document.createElement("div");
+    qDiv.className = "quiz-q";
+    qDiv.innerHTML = "<div class='quiz-q-num'>שאלה " + (qi+1) + " מתוך " + quizData.length + "</div><div><b>" + item.q + "</b></div>";
+    const optsDiv = document.createElement("div");
+    optsDiv.className = "quiz-opts";
+    item.opts.forEach((opt, oi)=>{
+      const b = document.createElement("div");
+      b.className = "quiz-opt";
+      b.textContent = opt;
+      b.onclick = ()=>answerQuiz(qi, oi);
+      optsDiv.appendChild(b);
+    });
+    qDiv.appendChild(optsDiv);
+    const explainDiv = document.createElement("div");
+    explainDiv.className = "quiz-explain";
+    explainDiv.id = "explain-" + qi;
+    explainDiv.textContent = item.explain;
+    qDiv.appendChild(explainDiv);
+    container.appendChild(qDiv);
+  });
+}
+let quizAnswered = {};
+function answerQuiz(qi, oi){
+  if(quizAnswered[qi]) return;
+  quizAnswered[qi] = true;
+  const item = quizData[qi];
+  const opts = document.querySelectorAll(".quiz-q")[qi].querySelectorAll(".quiz-opt");
+  opts.forEach((el, i)=>{
+    el.classList.add("disabled");
+    if(i === item.correct) el.classList.add("correct");
+    else if(i === oi) el.classList.add("wrong");
+  });
+  document.getElementById("explain-"+qi).classList.add("show");
+  if(Object.keys(quizAnswered).length === quizData.length){
+    markDone("s5");
+  }
+}
+renderQuiz();
+
+// סקריפט להפעלת חלונית העזרה
+document.addEventListener('DOMContentLoaded', function() {
+    // טעינת אילוני Lucide
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
+    const modal = document.getElementById('helpModal');
+    const modalContent = document.getElementById('helpModalContent');
+    const openBtn = document.getElementById('openHelpModalBtn');
+    const closeBtn = document.getElementById('closeHelpModalBtn');
+
+    if(openBtn && modal && modalContent && closeBtn) {
+        openBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            setTimeout(() => modalContent.classList.remove('scale-95'), 10);
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modalContent.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 150);
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modalContent.classList.add('scale-95');
+                setTimeout(() => modal.classList.add('hidden'), 150);
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>
