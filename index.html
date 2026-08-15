@@ -13,9 +13,9 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 :root{
-  --bg:#0A0E17; --panel:#121824; --panel2:#1C2336; --panel3:#252F48;
-  --border:#222F47; --border2:#344668;
-  --text:#E2E8F0; --muted:#94A3B8; --muted2:#64748B;
+  --bg:#FAF5E8; --panel:#121824; --panel2:#1C2336; --panel3:#252F48;
+  --border:#344668; --border2:#475569;
+  --text:#E2E8F0; --muted:#64748B; --muted2:#475569;
   --acl-deny:#EF4444; --acl-deny-dim:rgba(239,68,68,0.15);
   --acl-permit:#10B981; --acl-permit-dim:rgba(16,185,129,0.15);
   --cyber-purple:#8B5CF6; --cyber-blue:#3B82F6;
@@ -24,63 +24,64 @@
 }
 *{box-sizing:border-box;}
 body{
-  margin:0; background:var(--bg); color:var(--text);
+  margin:0; background:var(--bg); color:#1E293B;
   font-family:'Rubik',sans-serif; line-height:1.6;
   padding-bottom:140px;
 }
 .mono{font-family:'Fira Code',monospace;}
 .wrap{max-width:1100px; margin:0 auto; padding:0 20px;}
 h1,h2,h3{font-weight:700; margin:0 0 8px;}
-p{margin:0 0 12px; color:var(--muted);}
+p{margin:0 0 12px; color:#475569;}
 
 /* סרגל התקדמות עליון */
-.progressbar{position:sticky; top:0; z-index:150; background:rgba(10,14,23,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:14px 20px;}
+.progressbar{position:sticky; top:0; z-index:150; background:rgba(18,24,36,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:14px 20px;}
 .progressbar-inner{max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:14px;}
 .progressbar-title{font-weight:700; font-size:15px; white-space:nowrap; color:#FFFFFF;}
 .steps{display:flex; gap:6px; flex:1;}
 .step{flex:1; height:6px; border-radius:4px; background:var(--panel3); position:relative; overflow:hidden;}
 .step.done{background:var(--acl-permit);}
 .step.active{background:var(--cyber-blue);}
-.progress-pct{font-size:13px; color:var(--muted); font-family:'Fira Code',monospace; white-space:nowrap;}
+.progress-pct{font-size:13px; color:#94A3B8; font-family:'Fira Code',monospace; white-space:nowrap;}
 
 /* עיצוב כותרת ראשית */
-header.hero{padding:60px 0 30px; border-bottom:1px solid var(--border); position:relative;}
+header.hero{padding:60px 0 30px; border-bottom:1px solid rgba(0,0,0,0.1); position:relative;}
 .eyebrow{display:inline-block; font-family:'Fira Code',monospace; font-size:12px; letter-spacing:1px; color:var(--cyber-purple); background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.3); padding:5px 14px; border-radius:20px; margin-bottom:18px;}
 h1.title{
   font-size:42px; 
   margin-bottom:12px; 
-  color:#FFFFFF; 
+  color:#0F172A; 
   letter-spacing:-0.5px;
   display: flex;
   align-items: center;
   gap: 16px;
 }
-h1.title span{color:var(--cyber-purple); text-shadow:0 0 15px rgba(139,92,246,0.4);}
+h1.title span{color:var(--cyber-purple); text-shadow:0 0 15px rgba(139,92,246,0.2);}
 
-/* אנימציה ואלמנט האווואטר המסתובב */
+/* אנימציה ואלמנט האווואטר המסתובב (גודל כפול) */
 @keyframes spinCrazy {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 .title-avatar {
-  width: 1em;
-  height: 1em;
+  width: 2em;
+  height: 2em;
   border-radius: 50%;
   object-fit: cover;
   animation: spinCrazy 12s linear infinite;
-  border: 2px solid var(--cyber-purple);
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.5);
+  border: 3px solid var(--cyber-purple);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.4);
   flex-shrink: 0;
 }
 
-.subtitle{font-size:16px; max-width:750px; margin:0; color:var(--muted);}
+.subtitle{font-size:16px; max-width:750px; margin:0; color:#475569;}
 
-section{padding:50px 0; border-top:1px solid var(--border);}
+section{padding:50px 0; border-top:1px solid rgba(0,0,0,0.08);}
 .section-head{margin-bottom:26px;}
-.section-num{font-family:'Fira Code',monospace; color:var(--muted2); font-size:13px; margin-bottom:6px;}
-.section-title{font-size:24px; color:#FFFFFF;}
+.section-num{font-family:'Fira Code',monospace; color:var(--cyber-purple); font-size:13px; margin-bottom:6px; font-weight:600;}
+.section-title{font-size:24px; color:#0F172A;}
 
-.card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px;}
+.card{background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:var(--radius); padding:24px;}
+.card p{color:#94A3B8;}
 .grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
 @media(max-width:720px){.grid2{grid-template-columns:1fr;}}
 
@@ -92,12 +93,13 @@ section{padding:50px 0; border-top:1px solid var(--border);}
 
 /* אקורדיון שאלות חשיבה */
 .accordion{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:12px;}
-.acc-head{padding:16px 18px; background:var(--panel); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600;}
+.acc-head{padding:16px 18px; background:var(--panel); color:var(--text); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600;}
 .acc-head:hover{background:var(--panel2);}
-.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; background:var(--panel);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; background:var(--panel); color:var(--text);}
 .acc-body-inner{padding:0 18px 18px;}
+.acc-body-inner p{color:#94A3B8;}
 .accordion.open .acc-body{max-height:600px;}
-.acc-arrow{transition:transform .3s; color:var(--muted);}
+.acc-arrow{transition:transform .3s; color:#94A3B8;}
 .accordion.open .acc-arrow{transform:rotate(180deg);}
 
 /* אזור דיאגרמת ה-Acl המורחבת */
@@ -128,26 +130,26 @@ button.btn.danger{background:var(--acl-deny);}
 .prompt{color:#10B981; white-space:nowrap;}
 input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; font-family:'Fira Code',monospace; font-size:13px; outline:none;}
 
-.task-box{background:var(--panel2); border:1px solid var(--border2); border-radius:10px; padding:14px 16px; margin-bottom:14px;}
+.task-box{background:var(--panel2); color:var(--text); border:1px solid var(--border2); border-radius:10px; padding:14px 16px; margin-bottom:14px;}
 .task-title{font-weight:600; margin-bottom:4px; color:var(--gold);}
-.task-progress{font-family:'Fira Code',monospace; font-size:12px; color:var(--muted);}
+.task-progress{font-family:'Fira Code',monospace; font-size:12px; color:#94A3B8;}
 
-/* מערכת חידון אולטרה-מודרנית */
-.quiz-q{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px;}
-.quiz-q-num{font-family:'Fira Code',monospace; color:var(--muted2); font-size:12px; margin-bottom:6px;}
+/* מערכת חידון */
+.quiz-q{background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px;}
+.quiz-q-num{font-family:'Fira Code',monospace; color:var(--cyber-purple); font-size:12px; margin-bottom:6px; font-weight:600;}
 .quiz-opts{display:flex; flex-direction:column; gap:10px; margin-top:14px;}
 .quiz-opt{background:var(--panel3); border:1px solid var(--border2); border-radius:8px; padding:14px; cursor:pointer; text-align:right; font-size:14px; transition:all 0.15s;}
-.quiz-opt:hover{border-color:var(--muted); background:var(--panel2);}
+.quiz-opt:hover{border-color:#94A3B8; background:var(--panel2);}
 .quiz-opt.correct{background:rgba(16,185,129,0.15); border-color:var(--acl-permit); color:var(--acl-permit); font-weight:600;}
 .quiz-opt.wrong{background:rgba(239,68,68,0.15); border-color:var(--acl-deny); color:var(--acl-deny); font-weight:600;}
 .quiz-opt.disabled{pointer-events:none;}
-.quiz-explain{margin-top:12px; padding:12px; background:var(--panel2); border-radius:8px; font-size:13px; display:none; border-right:3px solid var(--gold);}
+.quiz-explain{margin-top:12px; padding:12px; background:var(--panel2); border-radius:8px; font-size:13px; display:none; border-right:3px solid var(--gold); color:#94A3B8;}
 .quiz-explain.show{display:block;}
 
-.completion{text-align:center; padding:50px 20px; background:linear-gradient(135deg, #111827, #062F22); border:2px solid var(--acl-permit); border-radius:var(--radius); display:none; margin-top:30px; box-shadow:0 0 20px rgba(16,185,129,0.2);}
+.completion{text-align:center; padding:50px 20px; background:linear-gradient(135deg, #111827, #062F22); color:#FFFFFF; border:2px solid var(--acl-permit); border-radius:var(--radius); display:none; margin-top:30px; box-shadow:0 0 20px rgba(16,185,129,0.2);}
 .completion.show{display:block;}
 
-.footer-note{text-align:center; color:var(--muted2); font-size:12px; margin-top:60px;}
+.footer-note{text-align:center; color:#64748B; font-size:12px; margin-top:60px;}
 ::-webkit-scrollbar{width:8px; height:8px;}
 ::-webkit-scrollbar-thumb{background:var(--border2); border-radius:4px;}
 @keyframes fadeIn { from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);} }
@@ -210,7 +212,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 </div>
 
 <div id="acc2" class="accordion">
-  <div class="acc-head" onclick="toggleAcc('acc2')"><span>מה תפקיד המילה המפתח 'established' בחוק ACL?</span><span class="acc-arrow">▾</span></div>
+  <div class="acc-head" onclick="toggleAcc('acc2')"><span>מה תפקיד המילה المפתח 'established' בחוק ACL?</span><span class="acc-arrow">▾</span></div>
   <div class="acc-body"><div class="acc-body-inner">
     <p>הפרמטר `established` מאפשר רק לתעבורת TCP <b>שהחלה מתוך הרשת הפנימית</b> לחזור פנימה. הוא חוסם בקשות TCP חדשות שמגיעות מבחוץ, ובכך מגן על תחנות הקצה מפני יוזמות התחברות עוינות.</p>
   </div></div>
@@ -272,7 +274,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 </svg>
 
 <div class="controls-row">
-  <span id="aclInfo" style="color:var(--muted); font-size:14px;">בחר אחד מנתיבי התעבורה לבדיקת חוקי ה-Extended ACL...</span>
+  <span id="aclInfo" style="color:#475569; font-size:14px; font-weight:600;">בחר אחד מנתיבי התעבורה לבדיקת חוקי ה-Extended ACL...</span>
 </div>
 <div class="controls-row">
   <button class="btn" onclick="triggerAclTest('Mgmt-SSH')">הנהלה ➔ שרת (SSH - Port 22) 🔐</button>
@@ -326,10 +328,9 @@ Core-Router(config)# <span class="hint">שלב 1: הקלד את חוק החסי�
 <div class="footer-note">מערכת סימולציה אינטראקטיבית — הנדסת רשתות ואבטחת מידע 2026</div>
 </div>
 
-<!-- כפתור עזרה צף קבוע בפינה התחתונה עם אווטר מובנה -->
+<!-- כפתור עזרה צף קבוע בפינה התחתונה -->
 <div class="fixed bottom-6 left-6 z-50 no-print">
     <button id="openHelpModalBtn" class="flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg shadow-cyan-500/20 transition-all duration-300 transform hover:scale-105 group border border-cyan-400/30">
-        <!-- אווטר קטן בתוך הכפתור -->
         <div class="w-8 h-8 rounded-full border border-white/40 overflow-hidden bg-slate-950 flex-shrink-0 shadow-inner">
             <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="אווטר בוט עזרה" class="w-full h-full object-cover">
         </div>
@@ -337,15 +338,13 @@ Core-Router(config)# <span class="hint">שלב 1: הקלד את חוק החסי�
     </button>
 </div>
 
-<!-- חלונית עזרה צפה (Modal) עם אווטר מורחב -->
+<!-- חלונית עזרה צפה (Modal) -->
 <div id="helpModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 transition-all duration-300">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full text-center relative shadow-2xl shadow-cyan-500/5 transform scale-95 transition-transform duration-300" id="helpModalContent">
-        <!-- כפתור סגירה X -->
         <button id="closeHelpModalBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-slate-800">
             <i data-lucide="x" class="w-5 h-5"></i>
         </button>
         
-        <!-- אווטר התמונה בחלונית -->
         <div class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-cyan-400/50 p-1 bg-slate-950 shadow-lg shadow-cyan-500/20 overflow-hidden">
             <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="תמונת בוט עזרה" class="w-full h-full object-cover rounded-full">
         </div>
@@ -353,7 +352,6 @@ Core-Router(config)# <span class="hint">שלב 1: הקלד את חוק החסי�
         <h3 class="text-lg font-black text-white mb-2">צריך עזרה במשימה?</h3>
         <p class="text-sm text-slate-400 mb-6 leading-relaxed">בוט העזרה הרשמי של האקדמיה זמין כעת כדי לענות על שאלות, להסביר מושגים ולכוון אותך לפתרון המלא!</p>
         
-        <!-- כפתור הפניה לקישור הבוט -->
         <a href="https://gemini.google.com/gem/167016ac4a4b/66c3b83daa7940ef?usp=sharing" target="_blank" class="w-full flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-black py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/10">
             <span>הפעל את בוט העזרה</span>
             <i data-lucide="external-link" class="w-4 h-4"></i>
@@ -401,7 +399,6 @@ function toggleAcc(id){
   document.getElementById(id).classList.toggle("open");
 }
 
-// קואורדינטות קבועות בדיאגרמת ה-ACL ללא שום חפיפות
 const nodes = {
   Mgmt: { x: 180, y: 120 },
   Guest: { x: 180, y: 420 },
@@ -427,6 +424,7 @@ async function animateAclPkt(x1, y1, x2, y2, color, label, duration) {
   }
 }
 
+/* מהירות איטית פי 2: משך האנימציה הוכפל ל-1400 מילי-שניות */
 async function triggerAclTest(type) {
   const info = document.getElementById("aclInfo");
   const logBox = document.getElementById("aclLog");
@@ -435,25 +433,25 @@ async function triggerAclTest(type) {
   if(type === 'Mgmt-SSH') {
     info.innerHTML = "סטטוס: בודק תעבורת <b style='color:#3B82F6'>SSH מ-VLAN 10</b>...";
     log("<span class='lbl'>[שילוח]</span> חבילת TCP מכתובת 10.10.10.50 אל פורט 22 בשרת יוצאת לדרך.");
-    await animateAclPkt(nodes.Mgmt.x, nodes.Mgmt.y, nodes.Router.x, nodes.Router.y, "#3B82F6", "SSH", 700);
+    await animateAclPkt(nodes.Mgmt.x, nodes.Mgmt.y, nodes.Router.x, nodes.Router.y, "#3B82F6", "SSH", 1400);
     
     log("<span class='lbl'>[בדיקת ACL]</span> הנתב בודק חוקים: התאמה לחוק היתר הנהלה! החבילה מאושרת (Permit).");
-    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", 700);
+    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", 1400);
     log("<span class='lbl'>[הצלחה]</span> החיבור המאובטח הוקם בהצלחה מול חוות השרתים.");
   } 
   else if(type === 'Guest-Web') {
     info.innerHTML = "סטטוס: בודק תעבורת <b style='color:#10B981'>HTTP מ-VLAN 20</b>...";
     log("<span class='lbl'>[שילוח]</span> בקשת דף אינטרנט מכתובת האורח 10.20.20.99 אל פורט 80.");
-    await animateAclPkt(nodes.Guest.x, nodes.Guest.y, nodes.Router.x, nodes.Router.y, "#10B981", "HTTP", 700);
+    await animateAclPkt(nodes.Guest.x, nodes.Guest.y, nodes.Router.x, nodes.Router.y, "#10B981", "HTTP", 1400);
     
     log("<span class='lbl'>[בדיקת ACL]</span> הנתב מזהה יעד פורט 80 ומאשר מעבר אורחים לצורך דפדוף בלבד.");
-    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", 700);
+    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", 1400);
     log("<span class='lbl'>[הצלחה]</span> דף ה-Web נטען בהצלחה במחשב האורח.");
   }
   else if(type === 'Guest-SSH') {
     info.innerHTML = "סטטוס: בודק תעבורת <b style='color:#EF4444'>SSH אסורה מ-VLAN 20</b>...";
     log("<span class='lbl'>[התרעה]</span> מחשב אורח מנסה ליזום חיבור SSH (פורט 22) לרכיבי הליבה!");
-    await animateAclPkt(nodes.Guest.x, nodes.Guest.y, nodes.Router.x, nodes.Router.y, "#EF4444", "SSH", 700);
+    await animateAclPkt(nodes.Guest.x, nodes.Guest.y, nodes.Router.x, nodes.Router.y, "#EF4444", "SSH", 1400);
     
     log("<span class='lbl'>[בלימה]</span> הנתב זיהה התאמה לחוק הספציפי: <b style='color:#EF4444'>access-list 101 deny tcp any host eq 22</b>. החבילה נזרקה!");
     document.getElementById("aclPacket").style.display = "none";
@@ -477,7 +475,6 @@ function log(text){
   p.scrollTop = p.scrollHeight;
 }
 
-// רשת ה-CLI של הראוטר
 const cliSteps = [
   {expect:/^access-list\s+101\s+deny\s+tcp\s+10\.20\.20\.0\s+0\.0\.0\.255\s+host\s+172\.16\.50\.10\s+eq\s+22\s*$/i, ok:"מעולה! חסמת בצורה מדויקת גישת SSH מרשת האורחים אל השרת המאובטח."},
   {expect:/^access-list\s+101\s+permit\s+tcp\s+10\.20\.20\.0\s+0\.0\.0\.255\s+host\s+172\.16\.50\.10\s+eq\s+80\s*$/i, ok:"מצוין! אישרת לאורחים לגשת לשירות ה-Web (פורט 80) באותו שרת יעד."},
@@ -516,7 +513,6 @@ function submitAclCmd() {
   output.scrollTop = output.scrollHeight;
 }
 
-// מערך חידון הסמכה מובנה
 const quizData = [
   {
     q: "מה ההבדל המרכזי בין Standard ACL ל-Extended ACL?",
@@ -575,7 +571,6 @@ function answerQuiz(qi, oi){
 }
 renderQuiz();
 
-// סקריפט להפעלת חלונית העזרה
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
