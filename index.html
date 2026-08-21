@@ -256,32 +256,57 @@ input.term-input{
 
 <section id="s3">
 <div class="section-head">
-  <div class="section-num">03 — סימולטור הגנה חיוני</div>
-  <h2 class="section-title">הפעל חבילות ועקוב אחר פעולת הנתב בזמן אמת</h2>
+  <div class="section-num">03 — סימולטור הגנה דינמי</div>
+  <h2 class="section-title">הגדר מדיניות, צפה בחוקים והרצ חבילות בזמן אמת</h2>
 </div>
-<p>בחר סוג חבילה מהכפתורים למטה כדי לראות אם חוקי ה-<span dir="ltr">ACL</span> שהגדרת בנתב הליבה מאשרים או חוסמים את המידע.</p>
+
+<!-- חלונית בחירת תרחיש ACL -->
+<div class="card concept-card" style="margin-bottom:20px;">
+  <h3 style="color:var(--gold);">1️⃣ בחר מדיניות אבטחה ליישום בנתב:</h3>
+  <p style="font-size:14px;">בחר אחד מ-10 תרחישי האבטחה הבאים כדי לטעון אותו לנתב הליבה:</p>
+  
+  <select id="aclScenarioSelect" class="mono" onchange="changeScenario()" style="width:100%; padding:12px; background:var(--panel2); color:#FFF; border:1px solid var(--cyber-purple); border-radius:8px; font-size:14px; cursor:pointer;">
+    <option value="0">תרחיש 1: חסימת SSH מורשת אורחים בלבד (ברירת מחדל)</option>
+    <option value="1">תרחיש 2: חסימת גלישת Web (Port 80) מרשת אורחים</option>
+    <option value="2">תרחיש 3: חסימה מוחלטת (Deny IP) של רשת האורחים לחוות השרתים</option>
+    <option value="3">תרחיש 4: חסימת SSH (Port 22) לכולם (כולל הנהלה)</option>
+    <option value="4">תרחיש 5: אישור גישת Web להנהלה בלבד (חסימת Web לאורחים)</option>
+    <option value="5">תרחיש 6: חסימת ICMP (Ping) מכל הרשתות לשרתים</option>
+    <option value="6">תרחיש 7: נעילה הרמטית (Deny All) - חסימת כל התעבורה לשרתים</option>
+    <option value="7">תרחיש 8: אישור מלא (Permit IP Any Any) - ללא הגנות</option>
+    <option value="8">תרחיש 9: חסימת רשת הנהלה מגישה לשרת (מצב תחזוקה)</option>
+    <option value="9">תרחיש 10: חסימת Web & SSH מרשת אורחים, היתר מלא להנהלה</option>
+  </select>
+
+  <!-- חלונית הצגת פקודות ה-ACL שהוגדרו -->
+  <div style="margin-top:16px; background:#05070B; border:1px solid var(--border2); border-radius:8px; padding:14px;">
+    <div style="font-size:12px; color:var(--cyber-purple); font-weight:bold; margin-bottom:6px;">📄 רשימת בקרת הגישה המופעלת כעת בנתב (Router_Core):</div>
+    <pre id="aclCodeDisplay" class="mono" style="margin:0; color:#10B981; font-size:13px; line-height:1.5; white-space:pre-wrap;" dir="ltr"></pre>
+  </div>
+</div>
+
+<p>2️⃣ כעת, תרגל שילוח חבילות מהכפתורים למטה ובדוק כיצד הנתב מגיב לחוק הטעון:</p>
 
 <div class="diagram-wrap">
 <svg id="aclDiagram" viewBox="0 0 1000 520" style="width:100%; display:block;">
-  
   <line x1="180" y1="120" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
   <line x1="180" y1="420" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
   <line x1="820" y1="280" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
 
-  <g class="node-box" onclick="testPacket('Mgmt')">
+  <g class="node-box" onclick="triggerAclTest('Mgmt-SSH')">
     <rect x="50" y="50" width="220" height="110" rx="8" fill="#121824" stroke="#3B82F6" stroke-width="2"/>
     <circle cx="85" cy="85" r="14" fill="#252F48"/>
     <text x="85" y="90" text-anchor="middle" fill="#3B82F6" font-size="12" font-weight="bold">M</text>
-    <text x="235" y="88" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">תחנת הנהלה <tspan dir="ltr">(VLAN 10)</tspan></text>
+    <text x="235" y="88" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">תחנת הנהלה (VLAN 10)</text>
     <text x="200" y="125" fill="#94A3B8" font-family="Fira Code" font-size="12" dir="ltr">IP: 10.10.10.50</text>
     <text x="200" y="142" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Sec Level: High</text>
   </g>
 
-  <g class="node-box" onclick="testPacket('Guest')">
+  <g class="node-box" onclick="triggerAclTest('Guest-Web')">
     <rect x="50" y="360" width="220" height="110" rx="8" fill="#121824" stroke="#EF4444" stroke-width="2"/>
     <circle cx="85" cy="395" r="14" fill="#252F48"/>
     <text x="85" y="400" text-anchor="middle" fill="#EF4444" font-size="12" font-weight="bold">G</text>
-    <text x="235" y="398" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">רשת אורחים <tspan dir="ltr">(VLAN 20)</tspan></text>
+    <text x="235" y="398" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">רשת אורחים (VLAN 20)</text>
     <text x="200" y="435" fill="#94A3B8" font-family="Fira Code" font-size="12" dir="ltr">IP: 10.20.20.99</text>
     <text x="200" y="452" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Sec Level: Low</text>
   </g>
@@ -291,15 +316,15 @@ input.term-input{
     <path d="M 45 60 L 95 60 M 83 50 L 95 60 L 83 70" stroke="#8B5CF6" stroke-width="2.5" fill="none"/>
     <path d="M 95 60 L 45 60 M 57 50 L 45 60 L 57 70" stroke="#8B5CF6" stroke-width="2.5" fill="none"/>
     <text x="70" y="125" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700" dir="ltr">Router_Core</text>
-    <text x="270" y="142" text-anchor="middle" fill="#8B5CF6" font-family="Fira Code" font-size="11" dir="ltr">ACL 101 Active</text>
+    <text x="70" y="142" text-anchor="middle" fill="#8B5CF6" font-family="Fira Code" font-size="11" dir="ltr">ACL Active</text>
   </g>
 
-  <g class="node-box" onclick="testPacket('Server')">
+  <g class="node-box" onclick="triggerAclTest('Guest-SSH')">
     <rect x="710" y="220" width="240" height="120" rx="8" fill="#121824" stroke="#10B981" stroke-width="2"/>
     <rect x="735" y="240" width="24" height="30" rx="3" fill="#252F48" stroke="#10B981" stroke-width="1.5"/>
-    <text x="875" y="258" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">חוות שרתים <tspan dir="ltr">(DMZ)</tspan></text>
+    <text x="875" y="258" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">חוות שרתים (DMZ)</text>
     <text x="875" y="295" fill="#94A3B8" font-family="Fira Code" font-size="12" dir="ltr">IP Target: 172.16.50.10</text>
-    <text x="875" y="312" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Allowed: HTTP (80), SSH (22)</text>
+    <text x="875" y="312" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Ports: HTTP(80), SSH(22)</text>
   </g>
 
   <g id="aclPacket" style="display:none;">
@@ -309,13 +334,13 @@ input.term-input{
 </svg>
 
 <div class="controls-row">
-  <span id="aclInfo" style="color:#475569; font-size:14px; font-weight:600;">בחר אחד מנתיבי התעבורה לבדיקת חוקי ה-<span dir="ltr">Extended ACL</span>...</span>
+  <span id="aclInfo" style="color:#475569; font-size:14px; font-weight:600;">מערכת מוכנה לבדיקה. לחץ על אחד הכפתורים לשילוח חבילה...</span>
 </div>
 <div class="controls-row">
-  <button class="btn" onclick="triggerAclTest('Mgmt-SSH')">הנהלה ➔ שרת <span dir="ltr">(SSH - Port 22)</span> 🔐</button>
-  <button class="btn" onclick="triggerAclTest('Guest-Web')">אורחים ➔ שרת <span dir="ltr">(Web - Port 80)</span> 🌐</button>
-  <button class="btn danger" onclick="triggerAclTest('Guest-SSH')">אורחים ➔ שרת <span dir="ltr">(SSH - Port 22)</span> ❌</button>
-  <button class="btn secondary" onclick="resetAclSim()">אתחל מערכת</button>
+  <button class="btn" onclick="triggerAclTest('Mgmt-SSH')">הנהלה ➔ שרת (SSH - Port 22) 🔐</button>
+  <button class="btn" onclick="triggerAclTest('Guest-Web')">אורחים ➔ שרת (Web - Port 80) 🌐</button>
+  <button class="btn danger" onclick="triggerAclTest('Guest-SSH')">אורחים ➔ שרת (SSH - Port 22) ❌</button>
+  <button class="btn secondary" onclick="resetAclSim()">אתחל מעבדה</button>
 </div>
 <div class="log-panel" id="aclLog">
   <div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>
@@ -445,6 +470,77 @@ const nodes = {
   Server: { x: 710, y: 280 }
 };
 
+// מערך 10 התרחישים לסימולטור
+const aclScenarios = [
+  {
+    title: "חסימת SSH מורשת אורחים בלבד",
+    cmds: "ip access-list extended 101\n deny tcp 10.20.20.0 0.0.0.255 host 172.16.50.10 eq 22\n permit ip any any\ninterface g0/0\n ip access-group 101 in",
+    rules: { 'Mgmt-SSH': true, 'Guest-Web': true, 'Guest-SSH': false }
+  },
+  {
+    title: "חסימת גלישת Web מרשת אורחים",
+    cmds: "ip access-list extended 101\n deny tcp 10.20.20.0 0.0.0.255 host 172.16.50.10 eq 80\n permit ip any any\ninterface g0/0\n ip access-group 101 in",
+    rules: { 'Mgmt-SSH': true, 'Guest-Web': false, 'Guest-SSH': true }
+  },
+  {
+    title: "חסימה מוחלטת של רשת האורחים",
+    cmds: "ip access-list extended 101\n deny ip 10.20.20.0 0.0.0.255 host 172.16.50.10\n permit ip any any\ninterface g0/0\n ip access-group 101 in",
+    rules: { 'Mgmt-SSH': true, 'Guest-Web': false, 'Guest-SSH': false }
+  },
+  {
+    title: "חסימת SSH לכולם",
+    cmds: "ip access-list extended 101\n deny tcp any host 172.16.50.10 eq 22\n permit ip any any\ninterface g0/0\n ip access-group 101 in",
+    rules: { 'Mgmt-SSH': false, 'Guest-Web': true, 'Guest-SSH': false }
+  },
+  {
+    title: "אישור Web להנהלה בלבד",
+    cmds: "ip access-list extended 101\n permit tcp 10.10.10.0 0.0.0.255 host 172.16.50.10\n deny tcp 10.20.20.0 0.0.0.255 host 172.16.50.10 eq 80\n permit ip any any\ninterface g0/0\n ip access-group 101 in",
+    rules: { 'Mgmt-SSH': true, 'Guest-Web': false, 'Guest-SSH': true }
+  },
+  {
+    title: "חסימת ICMP (Ping)",
+    cmds: "ip access-list extended 101\n deny icmp any host 172.16.50.10\n permit ip any any\ninterface g0/0\n ip access-group 101 in",
+    rules: { 'Mgmt-SSH': true, 'Guest-Web': true, 'Guest-SSH': true }
+  },
+  {
+    title: "נעילה הרמטית (Deny All)",
+    cmds: "ip access-list extended 101\n deny ip any any\ninterface g0/0\n ip access-group 101 in",
+    rules: { 'Mgmt-SSH': false, 'Guest-Web': false, 'Guest-SSH': false }
+  },
+  {
+    title: "אישור מלא (Permit All)",
+    cmds: "ip access-list extended 101\n permit ip any any\ninterface g0/0\n ip access-group 101 in",
+    rules: { 'Mgmt-SSH': true, 'Guest-Web': true, 'Guest-SSH': true }
+  },
+  {
+    title: "חסימת רשת הנהלה",
+    cmds: "ip access-list extended 101\n deny ip 10.10.10.0 0.0.0.255 host 172.16.50.10\n permit ip any any\ninterface g0/0\n ip access-group 101 in",
+    rules: { 'Mgmt-SSH': false, 'Guest-Web': true, 'Guest-SSH': true }
+  },
+  {
+    title: "חסימת Web & SSH מורשת אורחים",
+    cmds: "ip access-list extended 101\n deny tcp 10.20.20.0 0.0.0.255 host 172.16.50.10 eq 22\n deny tcp 10.20.20.0 0.0.0.255 host 172.16.50.10 eq 80\n permit ip any any\ninterface g0/0\n ip access-group 101 in",
+    rules: { 'Mgmt-SSH': true, 'Guest-Web': false, 'Guest-SSH': false }
+  }
+];
+
+let activeScenarioIndex = 0;
+
+function changeScenario() {
+  const sel = document.getElementById("aclScenarioSelect");
+  if(sel) {
+    activeScenarioIndex = parseInt(sel.value);
+    document.getElementById("aclCodeDisplay").textContent = aclScenarios[activeScenarioIndex].cmds;
+    resetAclSim();
+  }
+}
+
+function resetAclSim() {
+  document.getElementById("aclInfo").innerHTML = 'מערכת מוכנה לבדיקה. לחץ על אחד הכפתורים לשילוח חבילה...';
+  document.getElementById("aclLog").innerHTML = '<div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>';
+  document.getElementById("aclPacket").style.display = "none";
+}
+
 async function animateAclPkt(x1, y1, x2, y2, color, label, duration) {
   const pkt = document.getElementById("aclPacket");
   const circ = pkt.querySelector("circle");
@@ -467,41 +563,38 @@ async function triggerAclTest(type) {
   const info = document.getElementById("aclInfo");
   const logBox = document.getElementById("aclLog");
   logBox.innerHTML = "";
-  
-  if(type === 'Mgmt-SSH') {
-    info.innerHTML = "סטטוס: בודק תעבורת <b style='color:#3B82F6'><span dir='ltr'>SSH</span> מ-<span dir='ltr'>VLAN 10</span></b>...";
-    log("<span class='lbl'>[שילוח]</span> חבילת <span dir='ltr'>TCP</span> מכתובת <span dir='ltr'>10.10.10.50</span> אל פורט 22 בשרת יוצאת לדרך.");
-    await animateAclPkt(nodes.Mgmt.x, nodes.Mgmt.y, nodes.Router.x, nodes.Router.y, "#3B82F6", "SSH", 1400);
-    
-    log("<span class='lbl'>[בדיקת ACL]</span> הנתב בודק חוקים: התאמה לחוק היתר הנהלה! החבילה מאושרת (<span dir='ltr'>Permit</span>).");
-    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", 1400);
-    log("<span class='lbl'>[הצלחה]</span> החיבור המאובטח הוקם בהצלחה מול חוות השרתים.");
-  } 
-  else if(type === 'Guest-Web') {
-    info.innerHTML = "סטטוס: בודק תעבורת <b style='color:#10B981'><span dir='ltr'>HTTP</span> מ-<span dir='ltr'>VLAN 20</span></b>...";
-    log("<span class='lbl'>[שילוח]</span> בקשת דף אינטרנט מכתובת האורח <span dir='ltr'>10.20.20.99</span> אל פורט 80.");
-    await animateAclPkt(nodes.Guest.x, nodes.Guest.y, nodes.Router.x, nodes.Router.y, "#10B981", "HTTP", 1400);
-    
-    log("<span class='lbl'>[בדיקת ACL]</span> הנתב מזהה יעד פורט 80 ומאשר מעבר אורחים לצורך דפדוף בלבד.");
-    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", 1400);
-    log("<span class='lbl'>[הצלחה]</span> דף ה-<span dir='ltr'>Web</span> נטען בהצלחה במחשב האורח.");
-  }
-  else if(type === 'Guest-SSH') {
-    info.innerHTML = "סטטוס: בודק תעבורת <b style='color:#EF4444'><span dir='ltr'>SSH</span> אסורה מ-<span dir='ltr'>VLAN 20</span></b>...";
-    log("<span class='lbl'>[התרעה]</span> מחשב אורח מנסה ליזום חיבור <span dir='ltr'>SSH</span> (פורט 22) לרכיבי הליבה!");
-    await animateAclPkt(nodes.Guest.x, nodes.Guest.y, nodes.Router.x, nodes.Router.y, "#EF4444", "SSH", 1400);
-    
-    log("<span class='lbl'>[בלימה]</span> הנתב זיהה התאמה לחוק הספציפי: <code dir='ltr' style='color:#EF4444'>access-list 101 deny tcp any host eq 22</code>. החבילה נזרקה!");
-    document.getElementById("aclPacket").style.display = "none";
-    log("<span class='lbl'>[תוצאה]</span> החיבור נחסם (<span dir='ltr'>Administratively Denied</span>). נמנעה פריצה.");
-  }
-  markDone("s3");
-}
 
-function resetAclSim() {
-  document.getElementById("aclInfo").innerHTML = 'בחר אחד מנתיבי התעבורה לבדיקת חוקי ה-<span dir="ltr">Extended ACL</span>...';
-  document.getElementById("aclLog").innerHTML = '<div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>';
-  document.getElementById("aclPacket").style.display = "none";
+  const sc = aclScenarios[activeScenarioIndex];
+  const isAllowed = sc.rules[type];
+
+  let srcNode = nodes.Mgmt;
+  let protoLabel = "TCP";
+  let descText = "";
+
+  if (type === 'Mgmt-SSH') {
+    srcNode = nodes.Mgmt; protoLabel = "SSH"; descText = "הנהלה (10.10.10.50) ➔ SSH (22)";
+  } else if (type === 'Guest-Web') {
+    srcNode = nodes.Guest; protoLabel = "HTTP"; descText = "אורחים (10.20.20.99) ➔ Web (80)";
+  } else if (type === 'Guest-SSH') {
+    srcNode = nodes.Guest; protoLabel = "SSH"; descText = "אורחים (10.20.20.99) ➔ SSH (22)";
+  }
+
+  info.innerHTML = `סטטוס: בודק תעבורת <b>${descText}</b>...`;
+  log(`<span class='lbl'>[שילוח]</span> חבילת מידע מסוג ${protoLabel} יוצאת לדרך אל הנתב.`);
+
+  await animateAclPkt(srcNode.x, srcNode.y, nodes.Router.x, nodes.Router.y, isAllowed ? "#3B82F6" : "#EF4444", protoLabel, 1200);
+
+  if (isAllowed) {
+    log(`<span class='lbl'>[בדיקת ACL]</span> הנתב בודק את חוקי ה-ACL: החבילה מותרת לפי המדיניות! (<span dir='ltr'>Permit</span>).`);
+    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", 1200);
+    log(`<span class='lbl'>[הצלחה]</span> החבילה הגיעה ליעדה בחוות השרתים.`);
+  } else {
+    log(`<span class='lbl'>[בלימה]</span> הנתב מזהה התאמה לחוק חסימה/חוסר אישור. החבילה נזרקה! (<span dir='ltr'>Denied</span>)`);
+    document.getElementById("aclPacket").style.display = "none";
+    log(`<span class='lbl'>[תוצאה]</span> החיבור נחסם על ידי ה-ACL המופעל בנתב.`);
+  }
+
+  markDone("s3");
 }
 
 function log(text){
@@ -591,6 +684,7 @@ function renderQuiz(){
     container.appendChild(qDiv);
   });
 }
+
 let quizAnswered = {};
 function answerQuiz(qi, oi){
   if(quizAnswered[qi]) return;
@@ -607,9 +701,10 @@ function answerQuiz(qi, oi){
     markDone("s5");
   }
 }
-renderQuiz();
 
 document.addEventListener('DOMContentLoaded', function() {
+    changeScenario(); // טעינת התרחיש הראשון בעת עליית הדף
+
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
@@ -638,6 +733,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+renderQuiz();
 </script>
 </body>
 </html>
