@@ -33,7 +33,6 @@ body{
 h1,h2,h3{font-weight:700; margin:0 0 8px;}
 p{margin:0 0 12px; color:#475569;}
 
-/* מחלקות עזר למיסגור אנגלית וקוד LTR */
 .en-inline {
   direction: ltr;
   display: inline-block;
@@ -50,7 +49,6 @@ p{margin:0 0 12px; color:#475569;}
 .step.active{background:var(--cyber-blue);}
 .progress-pct{font-size:13px; color:#94A3B8; font-family:'Fira Code',monospace; white-space:nowrap; direction: ltr;}
 
-/* עיצוב כותרת ראשית */
 header.hero{padding:60px 0 30px; border-bottom:1px solid rgba(0,0,0,0.1); position:relative;}
 .eyebrow{display:inline-block; font-family:'Fira Code',monospace; font-size:12px; letter-spacing:1px; color:var(--cyber-purple); background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.3); padding:5px 14px; border-radius:20px; margin-bottom:18px; direction: ltr;}
 h1.title{
@@ -64,7 +62,6 @@ h1.title{
 }
 h1.title span{color:var(--cyber-purple); text-shadow:0 0 15px rgba(139,92,246,0.2); direction: ltr; display: inline-block;}
 
-/* אנימציה ואלמנט האווואטר המסתובב */
 @keyframes spinCrazy {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -98,7 +95,6 @@ section{padding:50px 0; border-top:1px solid rgba(0,0,0,0.08);}
 .tag.permit{background:var(--acl-permit-dim); color:var(--acl-permit);}
 .tag.purple{background:rgba(139,92,246,0.15); color:var(--cyber-purple);}
 
-/* אקורדיון שאלות חשיבה */
 .accordion{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:12px;}
 .acc-head{padding:16px 18px; background:var(--panel); color:var(--text); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600;}
 .acc-head:hover{background:var(--panel2);}
@@ -109,7 +105,6 @@ section{padding:50px 0; border-top:1px solid rgba(0,0,0,0.08);}
 .acc-arrow{transition:transform .3s; color:#94A3B8;}
 .accordion.open .acc-arrow{transform:rotate(180deg);}
 
-/* אזור דיאגרמת ה-ACL המורחבת */
 .diagram-wrap{background:#070A10; border:2px solid var(--border); border-radius:var(--radius); padding:30px; overflow-x:auto; margin-top:20px; position:relative;}
 .node-box{cursor:pointer; transition:transform 0.2s, opacity 0.15s;}
 .node-box:hover{opacity:0.95; transform:scale(1.01); fill-opacity:0.9;}
@@ -119,12 +114,12 @@ button.btn:hover{opacity:0.9; box-shadow:0 0 12px rgba(139,92,246,0.4);}
 button.btn:active{transform:scale(0.97);}
 button.btn.secondary{background:var(--panel3); color:var(--text); border:1px solid var(--border2);}
 button.btn.danger{background:var(--acl-deny);}
+button.btn.warning{background:var(--gold); color:#000;}
 
 .log-panel{background:#04060A; border:1px solid var(--border); border-radius:10px; margin-top:16px; padding:16px; font-family:'Fira Code',monospace; font-size:13px; max-height:240px; overflow-y:auto; color:#A1B0CB; border-left:3px solid var(--cyber-blue);}
 .log-line{margin-bottom:8px; animation:fadeIn .3s ease;}
 .log-line .lbl{color:var(--cyber-purple); font-weight:bold;}
 
-/* טרמינל הגדרות ה-Cisco - מותאם RTL/LTR מלא */
 .terminal{
   background:#05070B; 
   border:1px solid var(--cyber-purple); 
@@ -180,6 +175,34 @@ input.term-input{
 .quiz-opt.disabled{pointer-events:none;}
 .quiz-explain{margin-top:12px; padding:12px; background:var(--panel2); border-radius:8px; font-size:13px; display:none; border-right:3px solid var(--gold); color:#94A3B8;}
 .quiz-explain.show{display:block;}
+
+.score-box {
+  background: linear-gradient(135deg, #1C2336, #252F48);
+  border: 2px solid var(--cyber-purple);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+/* אזור למורה */
+.teacher-zone {
+  background: linear-gradient(135deg, #1E1B4B, #311042);
+  border: 2px dashed var(--cyber-purple);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-top: 30px;
+  color: #FFF;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.teacher-zone:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+}
 
 .completion{text-align:center; padding:50px 20px; background:linear-gradient(135deg, #111827, #062F22); color:#FFFFFF; border:2px solid var(--acl-permit); border-radius:var(--radius); display:none; margin-top:30px; box-shadow:0 0 20px rgba(16,185,129,0.2);}
 .completion.show{display:block;}
@@ -327,21 +350,38 @@ input.term-input{
     <text x="875" y="312" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Ports: HTTP(80), SSH(22)</text>
   </g>
 
+  <!-- חבילה בצורת מעטפת מידע מעוצבת עם תגית נתונים -->
   <g id="aclPacket" style="display:none;">
-    <circle r="12" fill="#8B5CF6" stroke="#FFFFFF" stroke-width="2"/>
-    <text id="aclPacketLabel" y="4" text-anchor="middle" fill="#FFFFFF" font-family="Fira Code" font-size="9" font-weight="800" dir="ltr">IP</text>
+    <!-- גוף המעטפה -->
+    <rect x="-24" y="-16" width="48" height="32" rx="4" fill="#1E293B" stroke="#8B5CF6" stroke-width="2"/>
+    <!-- קפלי המעטפה -->
+    <path d="M -24 -16 L 0 2 L 24 -16" stroke="#8B5CF6" stroke-width="1.5" fill="none"/>
+    <path d="M -24 16 L -8 0" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <path d="M 24 16 L 8 0" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <!-- סמל פרוטוקול במרכז -->
+    <text id="aclPacketLabel" y="5" text-anchor="middle" fill="#10B981" font-family="Fira Code" font-size="10" font-weight="800" dir="ltr">TCP</text>
+    
+    <!-- תיבת מידע חשובה לתלמיד הצפה מעל המעטפה -->
+    <g transform="translate(0, -32)">
+      <rect id="pktInfoBg" x="-75" y="-18" width="150" height="22" rx="4" fill="#05070B" stroke="#F59E0B" stroke-width="1"/>
+      <text id="pktInfoText" y="-3" text-anchor="middle" fill="#F59E0B" font-family="Fira Code" font-size="9" font-weight="bold" dir="ltr">SRC: 10.10.10.50 | DPT: 22</text>
+    </g>
   </g>
 </svg>
 
 <div class="controls-row">
   <span id="aclInfo" style="color:#475569; font-size:14px; font-weight:600;">מערכת מוכנה לבדיקה. לחץ על אחד הכפתורים לשילוח חבילה...</span>
 </div>
+
+<!-- סרגל כפתורי שליטה מורחב הכולל השהייה/שחרור -->
 <div class="controls-row">
   <button class="btn" onclick="triggerAclTest('Mgmt-SSH')">הנהלה ➔ שרת (SSH - Port 22) 🔐</button>
   <button class="btn" onclick="triggerAclTest('Guest-Web')">אורחים ➔ שרת (Web - Port 80) 🌐</button>
   <button class="btn danger" onclick="triggerAclTest('Guest-SSH')">אורחים ➔ שרת (SSH - Port 22) ❌</button>
+  <button class="btn warning" id="pauseBtn" onclick="togglePauseSim()">⏸️ השהה סימולציה</button>
   <button class="btn secondary" onclick="resetAclSim()">אתחל מעבדה</button>
 </div>
+
 <div class="log-panel" id="aclLog">
   <div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>
 </div>
@@ -360,7 +400,6 @@ input.term-input{
   <div class="task-progress" id="taskProgress">שלב 1 מתוך 3</div>
 </div>
 
-<!-- חלונית המסוף מותאמת כעת באופן מלא לכללי כתיבה LTR -->
 <div class="terminal" dir="ltr">
   <div class="term-topbar">
     <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
@@ -378,10 +417,27 @@ Core-Router(config)# <span class="hint" dir="rtl">שלב 1: הקלד את חוק
 
 <section id="s5">
 <div class="section-head">
-  <div class="section-num">05 — מבחן הסמכת סייבר</div>
-  <h2 class="section-title">הוכח הבנה ארכיטקטונית</h2>
+  <div class="section-num">05 — מבחן הסמכת סייבר (10 שאלות)</div>
+  <h2 class="section-title">הוכח הבנה ארכיטקטונית ומעשית</h2>
 </div>
+
+<!-- חלונית הצגת ציון -->
+<div id="scoreBox" class="score-box" style="display:none;">
+  ענית על כל השאלות! הציון שלך במבחן ההסמכה: <span id="userScore" style="color:var(--gold); font-size:28px;">0%</span>
+</div>
+
 <div id="quizContainer"></div>
+
+<!-- חלונית מיוחדת למורה -->
+<div class="teacher-zone" onclick="openTeacherModal()">
+  <div style="display:flex; align-items:center; justify-content:space-between;">
+    <div>
+      <h3 style="margin:0; color:var(--gold); font-size:18px;">👨‍🏫 חלונית למורה / מדריך סייבר</h3>
+      <p style="margin:4px 0 0; font-size:13px; color:#CBD5E1;">לחץ כאן והזן סיסמה כדי לצפות בתשובות הנכונות ובהסברים המלאים למבחן.</p>
+    </div>
+    <div style="font-size:24px;">🔑</div>
+  </div>
+</div>
 </section>
 
 <div class="completion" id="completionBox">
@@ -392,7 +448,7 @@ Core-Router(config)# <span class="hint" dir="rtl">שלב 1: הקלד את חוק
 <div class="footer-note">מערכת סימולציה אינטראקטיבית — הנדסת רשתות ואבטחת מידע 2026</div>
 </div>
 
-<!-- כפתור עזרה צף קבוע בפינה התחתונה -->
+<!-- כפתור עזרה צף -->
 <div class="fixed bottom-6 left-6 z-50 no-print">
     <button id="openHelpModalBtn" class="flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg shadow-cyan-500/20 transition-all duration-300 transform hover:scale-105 group border border-cyan-400/30">
         <div class="w-8 h-8 rounded-full border border-white/40 overflow-hidden bg-slate-950 flex-shrink-0 shadow-inner">
@@ -402,7 +458,32 @@ Core-Router(config)# <span class="hint" dir="rtl">שלב 1: הקלד את חוק
     </button>
 </div>
 
-<!-- חלונית עזרה צפה (Modal) -->
+<!-- Modal למורה - הזנת סיסמה ותשובות -->
+<div id="teacherModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[200] hidden flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-purple-500 rounded-2xl p-6 max-w-2xl w-full text-right relative shadow-2xl overflow-y-auto max-h-[85vh]">
+    <button onclick="closeTeacherModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
+    
+    <h3 class="text-xl font-bold text-amber-400 mb-2">🔒 אזור מורה מאובטח</h3>
+    
+    <div id="teacherAuthSec">
+      <p class="text-sm text-slate-300 mb-4">הזן סיסמת מורה כדי לחשוף את התשובות הנכונות:</p>
+      <div class="flex gap-2 mb-4">
+        <input type="password" id="teacherPassInput" class="bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-lg flex-1 mono outline-none focus:border-purple-500" placeholder="הכנס סיסמה...">
+        <button onclick="checkTeacherPassword()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2 rounded-lg transition-all">אישור</button>
+      </div>
+      <div id="teacherPassErr" class="text-red-400 text-xs hidden">❌ סיסמה שגויה! נסה שוב.</div>
+    </div>
+
+    <div id="teacherAnswersSec" class="hidden">
+      <div class="p-3 bg-emerald-950/50 border border-emerald-500/40 rounded-lg text-emerald-300 text-xs mb-4">
+        ✔ סיסמה אושרה! להלן מפתח התשובות הנכונות וההסברים המלאים למבחן:
+      </div>
+      <div id="answersList" class="space-y-4 text-sm text-slate-200"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal עזרה -->
 <div id="helpModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 transition-all duration-300">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full text-center relative shadow-2xl shadow-cyan-500/5 transform scale-95 transition-transform duration-300" id="helpModalContent">
         <button id="closeHelpModalBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-slate-800">
@@ -470,7 +551,6 @@ const nodes = {
   Server: { x: 710, y: 280 }
 };
 
-// מערך 10 התרחישים לסימולטור
 const aclScenarios = [
   {
     title: "חסימת SSH מורשת אורחים בלבד",
@@ -525,6 +605,8 @@ const aclScenarios = [
 ];
 
 let activeScenarioIndex = 0;
+let isPaused = false;
+let currentAnimResolve = null;
 
 function changeScenario() {
   const sel = document.getElementById("aclScenarioSelect");
@@ -536,21 +618,43 @@ function changeScenario() {
 }
 
 function resetAclSim() {
+  isPaused = false;
+  document.getElementById("pauseBtn").textContent = "⏸️ השהה סימולציה";
   document.getElementById("aclInfo").innerHTML = 'מערכת מוכנה לבדיקה. לחץ על אחד הכפתורים לשילוח חבילה...';
   document.getElementById("aclLog").innerHTML = '<div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>';
   document.getElementById("aclPacket").style.display = "none";
 }
 
-async function animateAclPkt(x1, y1, x2, y2, color, label, duration) {
+function togglePauseSim() {
+  isPaused = !isPaused;
+  const btn = document.getElementById("pauseBtn");
+  if (isPaused) {
+    btn.textContent = "▶️ שחרר / ההמשך סימולציה";
+    log("<span class='lbl'>[השהייה]</span> הסימולציה הופסקה זמנית לבחינת הנתונים.");
+  } else {
+    btn.textContent = "⏸️ השהה סימולציה";
+    log("<span class='lbl'>[המשך]</span> הסימולציה הופעלה מחדש.");
+  }
+}
+
+async function animateAclPkt(x1, y1, x2, y2, strokeColor, label, infoStr, duration) {
   const pkt = document.getElementById("aclPacket");
-  const circ = pkt.querySelector("circle");
+  const rect = pkt.querySelector("rect");
   const txt = document.getElementById("aclPacketLabel");
-  circ.setAttribute("fill", color);
+  const infoText = document.getElementById("pktInfoText");
+  const infoBg = document.getElementById("pktInfoBg");
+
+  rect.setAttribute("stroke", strokeColor);
   txt.textContent = label;
+  infoText.textContent = infoStr;
+
   pkt.style.display = "block";
   
-  const steps = 30;
+  const steps = 60;
   for(let i=0; i<=steps; i++){
+    while (isPaused) {
+      await new Promise(r => setTimeout(r, 100));
+    }
     const t = i/steps;
     const cx = x1 + (x2 - x1)*t;
     const cy = y1 + (y2 - y1)*t;
@@ -560,6 +664,7 @@ async function animateAclPkt(x1, y1, x2, y2, color, label, duration) {
 }
 
 async function triggerAclTest(type) {
+  resetAclSim();
   const info = document.getElementById("aclInfo");
   const logBox = document.getElementById("aclLog");
   logBox.innerHTML = "";
@@ -570,26 +675,27 @@ async function triggerAclTest(type) {
   let srcNode = nodes.Mgmt;
   let protoLabel = "TCP";
   let descText = "";
+  let infoStr = "";
 
   if (type === 'Mgmt-SSH') {
-    srcNode = nodes.Mgmt; protoLabel = "SSH"; descText = "הנהלה (10.10.10.50) ➔ SSH (22)";
+    srcNode = nodes.Mgmt; protoLabel = "SSH"; descText = "הנהלה ➔ SSH (22)"; infoStr = "SRC:10.10.10.50 | DST:172.16.50.10 | DPT:22";
   } else if (type === 'Guest-Web') {
-    srcNode = nodes.Guest; protoLabel = "HTTP"; descText = "אורחים (10.20.20.99) ➔ Web (80)";
+    srcNode = nodes.Guest; protoLabel = "HTTP"; descText = "אורחים ➔ Web (80)"; infoStr = "SRC:10.20.20.99 | DST:172.16.50.10 | DPT:80";
   } else if (type === 'Guest-SSH') {
-    srcNode = nodes.Guest; protoLabel = "SSH"; descText = "אורחים (10.20.20.99) ➔ SSH (22)";
+    srcNode = nodes.Guest; protoLabel = "SSH"; descText = "אורחים ➔ SSH (22)"; infoStr = "SRC:10.20.20.99 | DST:172.16.50.10 | DPT:22";
   }
 
   info.innerHTML = `סטטוס: בודק תעבורת <b>${descText}</b>...`;
-  log(`<span class='lbl'>[שילוח]</span> חבילת מידע מסוג ${protoLabel} יוצאת לדרך אל הנתב.`);
+  log(`<span class='lbl'>[שילוח]</span> מעטפת מידע מסוג ${protoLabel} יוצאת לדרך אל הנתב.`);
 
-  await animateAclPkt(srcNode.x, srcNode.y, nodes.Router.x, nodes.Router.y, isAllowed ? "#3B82F6" : "#EF4444", protoLabel, 1200);
+  await animateAclPkt(srcNode.x, srcNode.y, nodes.Router.x, nodes.Router.y, isAllowed ? "#3B82F6" : "#EF4444", protoLabel, infoStr, 1500);
 
   if (isAllowed) {
-    log(`<span class='lbl'>[בדיקת ACL]</span> הנתב בודק את חוקי ה-ACL: החבילה מותרת לפי המדיניות! (<span dir='ltr'>Permit</span>).`);
-    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", 1200);
+    log(`<span class='lbl'>[בדיקת ACL]</span> הנתב בודק את החוקים: החבילה מותרת לפי המדיניות! (<span dir='ltr'>Permit</span>).`);
+    await animateAclPkt(nodes.Router.x, nodes.Router.y, nodes.Server.x, nodes.Server.y, "#10B981", "PASS", infoStr, 1500);
     log(`<span class='lbl'>[הצלחה]</span> החבילה הגיעה ליעדה בחוות השרתים.`);
   } else {
-    log(`<span class='lbl'>[בלימה]</span> הנתב מזהה התאמה לחוק חסימה/חוסר אישור. החבילה נזרקה! (<span dir='ltr'>Denied</span>)`);
+    log(`<span class='lbl'>[בלימה]</span> הנתב מזהה חוק חסימה/חוסר אישור. החבילה נזרקה! (<span dir='ltr'>Denied</span>)`);
     document.getElementById("aclPacket").style.display = "none";
     log(`<span class='lbl'>[תוצאה]</span> החיבור נחסם על ידי ה-ACL המופעל בנתב.`);
   }
@@ -644,24 +750,126 @@ function submitAclCmd() {
   output.scrollTop = output.scrollHeight;
 }
 
+/* 10 שאלות למבחן ההסמכה בסייבר */
 const quizData = [
   {
-    q: "מה ההבדל המרכזי בין Standard ACL ל-Extended ACL?",
-    opts: ["Standard בודק רק כתובת IP מקור, בעוד ש-Extended מסוגל לבדוק גם IP יעד, סוג פרוטוקול ומספרי פורטים.", "Standard מיושם רק על נתבי אלחוט ו-Extended על מתגים קשיחים.", "Standard חוסם רק תעבורת אינטרנט ו-Extended חוסם רק דואר אלקטרוני.", "אין שום הבדל ביניהם למעט מספרי הזיהוי."],
+    q: "1. מה ההבדל המרכזי בין Standard ACL ל-Extended ACL?",
+    opts: [
+      "Standard בודק רק כתובת IP מקור, בעוד ש-Extended מסוגל לבדוק גם IP יעד, פרוטוקול ומספרי פורטים.",
+      "Standard מיושם רק על נתבים אלחוטיים ו-Extended על מתגים בלבד.",
+      "Standard חוסם רק תעבורת Web ו-Extended חוסם דואר אלקטרוני.",
+      "אין שום הבדל ביניהם למעט מספרי הזיהוי."
+    ],
     correct: 0,
-    explain: "רשימת גישה מורחבת (Extended) מעניקה כוח סינון רב יותר מכיוון שהיא מנתחת את שכבות 3 ו-4 במלואן (מקור, יעד ופורט), בשונה מרשימה רגילה שבודקת מקור בלבד."
+    explain: "רשימת גישה מורחבת (Extended) מאפשרת סינון מתקדם בשכבות 3 ו-4 (מקור, יעד, פרוטוקול ופורטים), בניגוד לרשימה רגילה שבודקת מקור בלבד."
   },
   {
-    q: "אם חבילת מידע מגיעה לנתב ולא תואמת אף שורה ב-Extended ACL שהוגדר, מה יקרה לחבילה?",
-    opts: ["היא תועבר ישירות לשרת ה-DNS הקרוב", "היא תיחסם ותיזרק מיד עקב חוק החסימה הסמוי (Implicit Deny)", "היא תישמר בזיכרון הנתב למשך 24 שעות", "הנתב ייצר עבורה חוק אישור חדש באופן אוטומטי"],
+    q: "2. מה יקרה לחבילת מידע שמגיעה לנתב ולא תואמת אף חוק ב-Extended ACL?",
+    opts: [
+      "היא תועבר ישירות לשרת ה-DNS הקרוב.",
+      "היא תיחסם ותיזרק מיד עקב חוק החסימה הסמוי (Implicit Deny).",
+      "היא תישמר בזיכרון הנתב למשך 24 שעות.",
+      "הנתב ייצר עבורה חוק אישור חדש באופן אוטומטי."
+    ],
     correct: 1,
-    explain: "בסוף כל רשימת גישה קיים חוק חסימה מוחלט וסמוי. אם החבילה לא ענתה על אף תנאי קודם - היא מושמדת."
+    explain: "בסוף כל רשימת גישה קיים חוק סמוי (Implicit Deny IP Any Any) שמפיל כל תעבורה שלא אושרה מפורשות."
+  },
+  {
+    q: "3. היכן הכלל הארכיטקטורי המומלץ למיקום Extended ACL ברשת?",
+    opts: [
+      "קרוב ככל הניתן ליעד (Closest to Destination).",
+      "קרוב ככל הניתן למקור (Closest to Source).",
+      "במרכז הרשת בלבד.",
+      "על שרת ה-DHCP הארגוני."
+    ],
+    correct: 1,
+    explain: "Extended ACL ממוקמת קרוב למקור כדי לחסום תעבורה עוינת מיד בכניסה ולמנוע עומס מיותר ברוחב הפס של הרשת."
+  },
+  {
+    q: "4. מה תפקיד מילת המפתח 'established' בחוק Extended ACL?",
+    opts: [
+      "להבטיח שהנתב לא יבצע ריסטארט.",
+      "לאפשר רק תעבורת TCP בתגובה להתקשרות שהחלה מתוך הרשת הפנימית.",
+      "להגדיר סיסמה מאובטחת לרשת.",
+      "לאשר תעבורת UDP בלבד."
+    ],
+    correct: 1,
+    explain: "הפרמטר established בודק אם מורמים דגלי ACK/RST ב-TCP, ובכך מאפשר רק לחבילות המהוות מענה ליוזמה פנימית להיכנס לרשת."
+  },
+  {
+    q: "5. באיזה טווח מספרים משתמשים להגדרת Extended ACL קלאסית ב-Cisco?",
+    opts: [
+      "1-99",
+      "100-199",
+      "200-299",
+      "1000-1100"
+    ],
+    correct: 1,
+    explain: "הטווח הסטנדרטי עבור Extended ACL בציוד Cisco הוא 100-199 (וכן טווח מורחב 2000-2699)."
+  },
+  {
+    q: "6. מה מייצגת מסכת ה-Wildcard 0.0.0.255 בחוק ACL?",
+    opts: [
+      "התאמה מדויקת לכל 32 הביטים.",
+      "בדיקה של 24 הביטים הראשונים (Subnet /24) והתעלמות מהבית האחרון.",
+      "חסימה מוחלטת של כל הכתובות בעולם.",
+      "אישור של פורט 255 בלבד."
+    ],
+    correct: 1,
+    explain: "ב-Wildcard Mask, הביט 0 פירושו 'חובה להתאים' והביט 1 (255) פירושו 'לא משנה' (Don't Care)."
+  },
+  {
+    q: "7. מה המשמעות של המילה 'host' בתוך פקודת ACL (למשל: host 10.10.10.5)?",
+    opts: [
+      "מקבילה למסכת Wildcard של 0.0.0.0 (כתובת IP בודדת וספציפית).",
+      "מקבילה למילת המפתח 'any'.",
+      "מגדירה שהמחשב הוא שרת אחסון.",
+      "מפעילה פרוטוקול DHCP."
+    ],
+    correct: 0,
+    explain: "המילה host היא קיצור דרך המגדיר בדיקה של כתובת IP בודדת ומדויקת בלבד (Wildcard 0.0.0.0)."
+  },
+  {
+    q: "8. מה קורה כאשר נתב מוצא התאמה (Match) בחוק הראשון של ה-ACL?",
+    opts: [
+      "הוא ממשיך לבדוק את שאר החוקים ברשימה ליתר ביטחון.",
+      "הוא מפעיל את החוק מיד ומפסיק לבדוק את שאר הרשימה (First Match Win).",
+      "הוא מוחק את החוק מהזיכרון.",
+      "הוא שולח הודעת שגיאה למנהל הרשת."
+    ],
+    correct: 1,
+    explain: "עיבוד ACL מתבצע מלמעלה למטה. ברגע שנמצא חוק תואם, הפעולה (Permit/Deny) מבוצעת והסריקה נפתקת."
+  },
+  {
+    q: "9. באיזה פורט משתמש פרוטוקול SSH לאבטחת התחברות מרחוק?",
+    opts: [
+      "80",
+      "21",
+      "22",
+      "443"
+    ],
+    correct: 2,
+    explain: "SSH (Secure Shell) פועל מעל פרוטוקול TCP בפורט 22."
+  },
+  {
+    q: "10. איזו פקודה מחילה את רשימת הגישה 101 בכניסה לממשק GigabitEthernet 0/0?",
+    opts: [
+      "ip access-group 101 in (תחת הגדרת הממשק)",
+      "access-list 101 apply in",
+      "ip firewall 101 active",
+      "enable acl 101 g0/0"
+    ],
+    correct: 0,
+    explain: "הפקודה התקנית ב-Cisco להחלת ACL על ממשק היא ip access-group [number] [in/out] תחת מצב הגדרת הממשק."
   }
 ];
+
+let userAnswers = {};
 
 function renderQuiz(){
   const container = document.getElementById("quizContainer");
   if(!container) return;
+  container.innerHTML = "";
   quizData.forEach((item, qi)=>{
     const qDiv = document.createElement("div");
     qDiv.className = "quiz-q";
@@ -685,10 +893,9 @@ function renderQuiz(){
   });
 }
 
-let quizAnswered = {};
 function answerQuiz(qi, oi){
-  if(quizAnswered[qi]) return;
-  quizAnswered[qi] = true;
+  if(userAnswers[qi] !== undefined) return;
+  userAnswers[qi] = oi;
   const item = quizData[qi];
   const opts = document.querySelectorAll(".quiz-q")[qi].querySelectorAll(".quiz-opt");
   opts.forEach((el, i)=>{
@@ -697,13 +904,59 @@ function answerQuiz(qi, oi){
     else if(i === oi) el.classList.add("wrong");
   });
   document.getElementById("explain-"+qi).classList.add("show");
-  if(Object.keys(quizAnswered).length === quizData.length){
+  
+  if(Object.keys(userAnswers).length === quizData.length){
+    calculateScore();
     markDone("s5");
   }
 }
 
+function calculateScore(){
+  let correctCount = 0;
+  quizData.forEach((q, i)=>{
+    if(userAnswers[i] === q.correct) correctCount++;
+  });
+  const pct = Math.round((correctCount / quizData.length) * 100);
+  document.getElementById("userScore").textContent = pct + "% (" + correctCount + "/" + quizData.length + " תשובות נכונות)";
+  document.getElementById("scoreBox").style.display = "block";
+}
+
+/* מנגנון חלונית המורה והסיסמה */
+function openTeacherModal() {
+  document.getElementById("teacherModal").classList.remove("hidden");
+}
+function closeTeacherModal() {
+  document.getElementById("teacherModal").classList.add("hidden");
+}
+
+function checkTeacherPassword() {
+  const pass = document.getElementById("teacherPassInput").value.trim();
+  if (pass === "sahar") {
+    document.getElementById("teacherAuthSec").classList.add("hidden");
+    document.getElementById("teacherAnswersSec").classList.remove("hidden");
+    renderTeacherAnswers();
+  } else {
+    document.getElementById("teacherPassErr").classList.remove("hidden");
+  }
+}
+
+function renderTeacherAnswers() {
+  const list = document.getElementById("answersList");
+  list.innerHTML = "";
+  quizData.forEach((q, i) => {
+    const d = document.createElement("div");
+    d.className = "p-3 bg-slate-800/80 border border-slate-700 rounded-lg";
+    d.innerHTML = `
+      <div class="font-bold text-purple-300 mb-1">${q.q}</div>
+      <div class="text-emerald-400 font-semibold mb-1">✔ תשובה נכונה: ${q.opts[q.correct]}</div>
+      <div class="text-slate-400 text-xs">💡 הסבר: ${q.explain}</div>
+    `;
+    list.appendChild(d);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    changeScenario(); // טעינת התרחיש הראשון בעת עליית הדף
+    changeScenario();
 
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
