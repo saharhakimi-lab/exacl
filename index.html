@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><span class="en-inline">Extended Access Control List (ACL)</span> | סימולטור פקודות והגנת סייבר</title>
+<title>Extended Access Control List (ACL) | סימולטור פקודות והגנת סייבר</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght=400;500;600;700;800&family=Fira+Code:wght=400;500;600&display=swap" rel="stylesheet">
@@ -114,10 +114,42 @@ section{padding:50px 0; border-top:1px solid rgba(0,0,0,0.08);}
 .acc-arrow{transition:transform .3s; color:#94A3B8;}
 .accordion.open .acc-arrow{transform:rotate(180deg);}
 
-.diagram-wrap{background:#070A10; border:2px solid var(--border); border-radius:var(--radius); padding:30px; overflow-x:auto; margin-top:20px; position:relative;}
+/* פריסה של תרשים השרטוט לצד הכפתורים בחלק 3 */
+.sim-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .sim-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.diagram-wrap{background:#070A10; border:2px solid var(--border); border-radius:var(--radius); padding:20px; overflow-x:auto; position:relative;}
 .node-box{cursor:pointer; transition:transform 0.2s, opacity 0.15s;}
 .node-box:hover{opacity:0.95; transform:scale(1.01); fill-opacity:0.9;}
-.controls-row{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:20px;}
+
+/* פאנל כפתורים צדי בחלק 3 */
+.sim-controls-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #0B0F19;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.sim-controls-sidebar button.btn {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 13px;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.3;
+}
+
 button.btn{background:var(--cyber-purple); color:#FFFFFF; border:none; border-radius:8px; padding:12px 22px; font-family:'Rubik'; font-weight:600; font-size:15px; cursor:pointer; transition:transform .1s, opacity .15s;}
 button.btn:hover{opacity:0.9; box-shadow:0 0 12px rgba(139,92,246,0.4);}
 button.btn:active{transform:scale(0.97);}
@@ -317,83 +349,86 @@ input.term-input{
   </div>
 </div>
 
-<p>2️⃣ כעת, תרגל שילוח חבילות מהכפתורים למטה ובדוק כיצד הנתב מגיב לחוק הטעון:</p>
+<p>2️⃣ כעת, תרגל שילוח חבילות מהכפתורים לצד התרשים ובדוק כיצד הנתב מגיב לחוק הטעון:</p>
 
-<div class="diagram-wrap">
-<svg id="aclDiagram" viewBox="0 0 1000 520" style="width:100%; display:block;">
-  <line x1="180" y1="120" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
-  <line x1="180" y1="420" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
-  <line x1="820" y1="280" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
+<div class="sim-layout" style="margin-top: 20px;">
+  <!-- התרשים הדינמי -->
+  <div class="diagram-wrap">
+    <svg id="aclDiagram" viewBox="0 0 1000 520" style="width:100%; display:block;">
+      <line x1="180" y1="120" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
+      <line x1="180" y1="420" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
+      <line x1="820" y1="280" x2="500" y2="280" stroke="#344668" stroke-width="3"/>
 
-  <g class="node-box" onclick="triggerAclTest('Mgmt-SSH')">
-    <rect x="50" y="50" width="220" height="110" rx="8" fill="#121824" stroke="#3B82F6" stroke-width="2"/>
-    <circle cx="85" cy="85" r="14" fill="#252F48"/>
-    <text x="85" y="90" text-anchor="middle" fill="#3B82F6" font-size="12" font-weight="bold">M</text>
-    <text x="235" y="88" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">תחנת הנהלה (VLAN 10)</text>
-    <text x="200" y="125" fill="#94A3B8" font-family="Fira Code" font-size="12" dir="ltr">IP: 10.10.10.50</text>
-    <text x="200" y="142" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Sec Level: High</text>
-  </g>
+      <g class="node-box" onclick="triggerAclTest('Mgmt-SSH')">
+        <rect x="50" y="50" width="220" height="110" rx="8" fill="#121824" stroke="#3B82F6" stroke-width="2"/>
+        <circle cx="85" cy="85" r="14" fill="#252F48"/>
+        <text x="85" y="90" text-anchor="middle" fill="#3B82F6" font-size="12" font-weight="bold">M</text>
+        <text x="235" y="88" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">תחנת הנהלה (VLAN 10)</text>
+        <text x="200" y="125" fill="#94A3B8" font-family="Fira Code" font-size="12" dir="ltr">IP: 10.10.10.50</text>
+        <text x="200" y="142" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Sec Level: High</text>
+      </g>
 
-  <g class="node-box" onclick="triggerAclTest('Guest-Web')">
-    <rect x="50" y="360" width="220" height="110" rx="8" fill="#121824" stroke="#EF4444" stroke-width="2"/>
-    <circle cx="85" cy="395" r="14" fill="#252F48"/>
-    <text x="85" y="400" text-anchor="middle" fill="#EF4444" font-size="12" font-weight="bold">G</text>
-    <text x="235" y="398" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">רשת אורחים (VLAN 20)</text>
-    <text x="200" y="435" fill="#94A3B8" font-family="Fira Code" font-size="12" dir="ltr">IP: 10.20.20.99</text>
-    <text x="200" y="452" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Sec Level: Low</text>
-  </g>
+      <g class="node-box" onclick="triggerAclTest('Guest-Web')">
+        <rect x="50" y="360" width="220" height="110" rx="8" fill="#121824" stroke="#EF4444" stroke-width="2"/>
+        <circle cx="85" cy="395" r="14" fill="#252F48"/>
+        <text x="85" y="400" text-anchor="middle" fill="#EF4444" font-size="12" font-weight="bold">G</text>
+        <text x="235" y="398" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">רשת אורחים (VLAN 20)</text>
+        <text x="200" y="435" fill="#94A3B8" font-family="Fira Code" font-size="12" dir="ltr">IP: 10.20.20.99</text>
+        <text x="200" y="452" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Sec Level: Low</text>
+      </g>
 
-  <g transform="translate(430, 220)">
-    <circle cx="70" cy="60" r="45" fill="#1C2336" stroke="#8B5CF6" stroke-width="3"/>
-    <path d="M 45 60 L 95 60 M 83 50 L 95 60 L 83 70" stroke="#8B5CF6" stroke-width="2.5" fill="none"/>
-    <path d="M 95 60 L 45 60 M 57 50 L 45 60 L 57 70" stroke="#8B5CF6" stroke-width="2.5" fill="none"/>
-    <text x="70" y="125" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700" dir="ltr">Router_Core</text>
-    <text x="70" y="142" text-anchor="middle" fill="#8B5CF6" font-family="Fira Code" font-size="11" dir="ltr">ACL Active</text>
-  </g>
+      <g transform="translate(430, 220)">
+        <circle cx="70" cy="60" r="45" fill="#1C2336" stroke="#8B5CF6" stroke-width="3"/>
+        <path d="M 45 60 L 95 60 M 83 50 L 95 60 L 83 70" stroke="#8B5CF6" stroke-width="2.5" fill="none"/>
+        <path d="M 95 60 L 45 60 M 57 50 L 45 60 L 57 70" stroke="#8B5CF6" stroke-width="2.5" fill="none"/>
+        <text x="70" y="125" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700" dir="ltr">Router_Core</text>
+        <text x="70" y="142" text-anchor="middle" fill="#8B5CF6" font-family="Fira Code" font-size="11" dir="ltr">ACL Active</text>
+      </g>
 
-  <g class="node-box" onclick="triggerAclTest('Guest-SSH')">
-    <rect x="710" y="220" width="240" height="120" rx="8" fill="#121824" stroke="#10B981" stroke-width="2"/>
-    <rect x="735" y="240" width="24" height="30" rx="3" fill="#252F48" stroke="#10B981" stroke-width="1.5"/>
-    <text x="875" y="258" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">חוות שרתים (DMZ)</text>
-    <text x="875" y="295" fill="#94A3B8" font-family="Fira Code" font-size="12" dir="ltr">IP Target: 172.16.50.10</text>
-    <text x="875" y="312" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Ports: HTTP(80), SSH(22)</text>
-  </g>
+      <g class="node-box" onclick="triggerAclTest('Guest-SSH')">
+        <rect x="710" y="220" width="240" height="120" rx="8" fill="#121824" stroke="#10B981" stroke-width="2"/>
+        <rect x="735" y="240" width="24" height="30" rx="3" fill="#252F48" stroke="#10B981" stroke-width="1.5"/>
+        <text x="875" y="258" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">חוות שרתים (DMZ)</text>
+        <text x="875" y="295" fill="#94A3B8" font-family="Fira Code" font-size="12" dir="ltr">IP Target: 172.16.50.10</text>
+        <text x="875" y="312" fill="#64748B" font-family="Fira Code" font-size="11" dir="ltr">Ports: HTTP(80), SSH(22)</text>
+      </g>
 
-  <!-- חבילה בצורת מעטפת מידע מוגדלת שמתאימה בדיוק למעטפה -->
-  <g id="aclPacket" style="display:none;">
-    <!-- גוף המעטפה המוגדל -->
-    <rect x="-36" y="-24" width="72" height="48" rx="6" fill="#1E293B" stroke="#8B5CF6" stroke-width="2"/>
-    <!-- קפלי המעטפה -->
-    <path d="M -36 -24 L 0 3 L 36 -24" stroke="#8B5CF6" stroke-width="2" fill="none"/>
-    <path d="M -36 24 L -12 0" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3,3"/>
-    <path d="M 36 24 L 12 0" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3,3"/>
-    <!-- סמל פרוטוקול במרכז -->
-    <text id="aclPacketLabel" y="8" text-anchor="middle" fill="#10B981" font-family="Fira Code" font-size="12" font-weight="800" dir="ltr">TCP</text>
+      <!-- חבילה בצורת מעטפת מידע -->
+      <g id="aclPacket" style="display:none;">
+        <rect x="-36" y="-24" width="72" height="48" rx="6" fill="#1E293B" stroke="#8B5CF6" stroke-width="2"/>
+        <path d="M -36 -24 L 0 3 L 36 -24" stroke="#8B5CF6" stroke-width="2" fill="none"/>
+        <path d="M -36 24 L -12 0" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <path d="M 36 24 L 12 0" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <text id="aclPacketLabel" y="8" text-anchor="middle" fill="#10B981" font-family="Fira Code" font-size="12" font-weight="800" dir="ltr">TCP</text>
+        
+        <g transform="translate(0, -45)">
+          <rect id="pktInfoBg" x="-110" y="-16" width="220" height="28" rx="6" fill="#05070B" stroke="#F59E0B" stroke-width="1.5"/>
+          <text id="pktInfoText" y="3" text-anchor="middle" fill="#F59E0B" font-family="Fira Code" font-size="10" font-weight="bold" dir="ltr">SRC: 10.10.10.50 | DPT: 22</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- סרגל כפתורי שליטה צדי וצר -->
+  <div class="sim-controls-sidebar">
+    <div style="font-size:13px; font-weight:bold; color:var(--cyber-purple); margin-bottom:4px;">🕹️ שילוח חבילות:</div>
+    <button class="btn" onclick="triggerAclTest('Mgmt-SSH')">הנהלה ➔ שרת<br>(<span class="en-inline">SSH - Port 22</span>) 🔐</button>
+    <button class="btn" onclick="triggerAclTest('Guest-Web')">אורחים ➔ שרת<br>(<span class="en-inline">Web - Port 80</span>) 🌐</button>
+    <button class="btn danger" onclick="triggerAclTest('Guest-SSH')">אורחים ➔ שרת<br>(<span class="en-inline">SSH - Port 22</span>) ❌</button>
     
-    <!-- תיבת מידע חשובה לתלמיד הצפה מעל המעטפה - מותאמת בדיוק בגודלה -->
-    <g transform="translate(0, -45)">
-      <rect id="pktInfoBg" x="-110" y="-16" width="220" height="28" rx="6" fill="#05070B" stroke="#F59E0B" stroke-width="1.5"/>
-      <text id="pktInfoText" y="3" text-anchor="middle" fill="#F59E0B" font-family="Fira Code" font-size="10" font-weight="bold" dir="ltr">SRC: 10.10.10.50 | DPT: 22</text>
-    </g>
-  </g>
-</svg>
-
-<div class="controls-row">
-  <span id="aclInfo" style="color:#475569; font-size:14px; font-weight:600;">מערכת מוכנה לבדיקה. לחץ על אחד הכפתורים לשילוח חבילה...</span>
+    <hr style="border:0; border-top:1px solid var(--border); margin:8px 0; width:100%;">
+    
+    <div style="font-size:13px; font-weight:bold; color:var(--gold); margin-bottom:4px;">⚙️ שליטה בסימולציה:</div>
+    <button class="btn warning" id="pauseBtn" onclick="togglePauseSim()">⏸️️ השהה</button>
+    <button class="btn secondary" onclick="resetAclSim()">אתחל מעבדה</button>
+  </div>
 </div>
 
-<!-- סרגל כפתורי שליטה מורחב הכולל השהייה/שחרור -->
-<div class="controls-row">
-  <button class="btn" onclick="triggerAclTest('Mgmt-SSH')">הנהלה ➔ שרת (<span class="en-inline">SSH - Port 22</span>) 🔐</button>
-  <button class="btn" onclick="triggerAclTest('Guest-Web')">אורחים ➔ שרת (<span class="en-inline">Web - Port 80</span>) 🌐</button>
-  <button class="btn danger" onclick="triggerAclTest('Guest-SSH')">אורחים ➔ שרת (<span class="en-inline">SSH - Port 22</span>) ❌</button>
-  <button class="btn warning" id="pauseBtn" onclick="togglePauseSim()">⏸️ השהה סימולציה</button>
-  <button class="btn secondary" onclick="resetAclSim()">אתחל מעבדה</button>
-</div>
-
-<div class="log-panel" id="aclLog">
-  <div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>
-</div>
+<div style="margin-top:16px;">
+  <div id="aclInfo" style="color:#475569; font-size:14px; font-weight:600; margin-bottom:8px;">מערכת מוכנה לבדיקה. לחץ על אחד הכפתורים לשילוח חבילה...</div>
+  <div class="log-panel" id="aclLog" style="margin-top:0;">
+    <div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>
+  </div>
 </div>
 </section>
 
@@ -615,7 +650,6 @@ const aclScenarios = [
 
 let activeScenarioIndex = 0;
 let isPaused = false;
-let currentAnimResolve = null;
 
 function changeScenario() {
   const sel = document.getElementById("aclScenarioSelect");
@@ -628,7 +662,7 @@ function changeScenario() {
 
 function resetAclSim() {
   isPaused = false;
-  document.getElementById("pauseBtn").textContent = "⏸️ השהה סימולציה";
+  document.getElementById("pauseBtn").textContent = "⏸️ השהה";
   document.getElementById("aclInfo").innerHTML = 'מערכת מוכנה לבדיקה. לחץ על אחד הכפתורים לשילוח חבילה...';
   document.getElementById("aclLog").innerHTML = '<div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>';
   document.getElementById("aclPacket").style.display = "none";
@@ -638,10 +672,10 @@ function togglePauseSim() {
   isPaused = !isPaused;
   const btn = document.getElementById("pauseBtn");
   if (isPaused) {
-    btn.textContent = "▶️ שחרר / ההמשך סימולציה";
+    btn.textContent = "▶️ המשך";
     log("<span class='lbl'>[השהייה]</span> הסימולציה הופסקה זמנית לבחינת הנתונים.");
   } else {
-    btn.textContent = "⏸️ השהה סימולציה";
+    btn.textContent = "⏸️ השהה";
     log("<span class='lbl'>[המשך]</span> הסימולציה הופעלה מחדש.");
   }
 }
@@ -651,7 +685,6 @@ async function animateAclPkt(x1, y1, x2, y2, strokeColor, label, infoStr, durati
   const rect = pkt.querySelector("rect");
   const txt = document.getElementById("aclPacketLabel");
   const infoText = document.getElementById("pktInfoText");
-  const infoBg = document.getElementById("pktInfoBg");
 
   rect.setAttribute("stroke", strokeColor);
   txt.textContent = label;
