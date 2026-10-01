@@ -6,7 +6,7 @@
 <title>Extended Access Control List (ACL) | סימולטור פקודות והגנת סייבר</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght=400;500;600;700;800&family=Fira+Code:wght=400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 <!-- Tailwind CSS for help modal styling -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Lucide Icons -->
@@ -57,17 +57,83 @@ p{margin:0 0 12px; color:#475569;}
 .step.active{background:var(--cyber-blue);}
 .progress-pct{font-size:13px; color:#94A3B8; font-family:'Fira Code',monospace; white-space:nowrap; direction: ltr;}
 
-header.hero{padding:60px 0 30px; border-bottom:1px solid rgba(0,0,0,0.1); position:relative;}
-.eyebrow{display:inline-block; font-family:'Fira Code',monospace; font-size:12px; letter-spacing:1px; color:var(--cyber-purple); background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.3); padding:5px 14px; border-radius:20px; margin-bottom:18px; direction: ltr;}
-.eyebrow .en-inline, .tag .en-inline{border:none; background:none; padding:0; margin:0; font-size:1em; border-radius:0;}
-h1.title{
-  font-size:42px; 
-  margin-bottom:12px; 
-  color:#0F172A; 
-  letter-spacing:-0.5px;
+/* ============ HEADER (קומפקטי, רציף ומסודר בלי רווחים מיותרים) ============ */
+header.hero{
+  padding: 10px 0 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  position: relative;
+  background: linear-gradient(160deg, #fbf3e2 0%, #f7ecd6 55%, #f9efdb 100%);
+}
+
+.header-inner {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1300px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+
+.header-main-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.title-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  animation: spinCrazy 12s linear infinite;
+  border: 2px solid var(--cyber-purple);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.4), 0 0 0 3px #FFFFFF;
+  flex-shrink: 0;
+}
+
+.header-text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.eyebrow{
+  display:inline-block;
+  font-family:'Fira Code',monospace;
+  font-size:10.5px;
+  font-weight: 700;
+  letter-spacing:1px;
+  color:var(--cyber-purple);
+  background:rgba(139,92,246,0.15);
+  border:1px solid rgba(139,92,246,0.3);
+  padding:2px 8px;
+  border-radius:12px;
+  direction: ltr;
+  width: fit-content;
+  unicode-bidi: isolate;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+h1.title{
+  font-size: 20px;
+  margin: 0;
+  color: #0F172A;
+  line-height: 1.1;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 h1.title span{color:var(--cyber-purple); text-shadow:0 0 15px rgba(139,92,246,0.2); direction: ltr; display: inline-block;}
 
@@ -75,18 +141,77 @@ h1.title span{color:var(--cyber-purple); text-shadow:0 0 15px rgba(139,92,246,0.
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-.title-avatar {
-  width: 2em;
-  height: 2em;
-  border-radius: 50%;
-  object-fit: cover;
-  animation: spinCrazy 12s linear infinite;
-  border: 3px solid var(--cyber-purple);
-  box-shadow: 0 0 16px rgba(139, 92, 246, 0.4);
-  flex-shrink: 0;
+
+.subtitle{
+  font-size: 12px;
+  max-width: 750px;
+  margin: 0;
+  color: #475569;
+  font-weight: 700;
 }
 
-.subtitle{font-size:16px; max-width:750px; margin:0; color:#475569;}
+.header-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.protocol-row {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.protocol-chip {
+  font-family: 'Fira Code', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--cyber-purple);
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  padding: 2px 6px;
+  border-radius: 5px;
+  letter-spacing: 0.3px;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-btn {
+  font-family: 'Fira Code', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  letter-spacing: 0.2px;
+}
+
+.nav-btn:hover { transform: translateY(-1px); }
+
+.nav-btn.outline {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: var(--cyber-purple);
+}
+
+.nav-btn.solid {
+  background: linear-gradient(120deg, #8b5cf6, #3b82f6);
+  color: #ffffff;
+  box-shadow: 0 4px 12px -3px rgba(139, 92, 246, 0.5);
+}
 
 section{padding:50px 0; border-top:1px solid rgba(0,0,0,0.08);}
 .section-head{margin-bottom:26px;}
@@ -254,18 +379,13 @@ input.term-input{
 @keyframes fadeIn { from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);} }
 
 /* ===== DESIGN OVERRIDE ===== */
-/* ===== Sahar MAC Lesson – Design Override =====
-   הדביקו את כל הבלוק הזה בתוך <style> הקיים, בסופו (אחרי כל הכללים הקיימים).
-   אפס שינוי בתוכן / ב-HTML / ב-JS. */
-
 :root{
-  --red-soft:#fecaca;      /* אדום בהיר – טאב פעיל */
+  --red-soft:#fecaca;      
   --red-mid:#fca5a5;
   --red-ink:#7f1d1d;
   --ink:#1e1b4b;
 }
 
-/* ---------- רקע אורורה חי ---------- */
 body{
   background:#fdf8f4;
   position:relative;
@@ -287,8 +407,7 @@ body::before{
   100%{transform:translate3d(3%,-4%,0) scale(1.15) rotate(6deg)}
 }
 
-/* ---------- כותרת עליונה זכוכית ---------- */
-header.sticky{
+header.hero{
   background:rgba(255,255,255,.65)!important;
   backdrop-filter:blur(18px) saturate(1.6);
   border-bottom:1px solid rgba(255,255,255,.7)!important;
@@ -299,12 +418,7 @@ header h1{
   -webkit-background-clip:text; background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-header h1 .eng-tag{ -webkit-text-fill-color:#0369a1; }
-header img.avatar-tilted{
-  box-shadow:0 0 0 4px #fff, 0 0 0 7px var(--red-mid), 0 12px 30px rgba(190,18,60,.35);
-}
 
-/* ---------- כרטיסים: זכוכית + זוהר ---------- */
 main .bg-white.rounded-2xl,
 aside .bg-white{
   background:rgba(255,255,255,.72)!important;
@@ -319,16 +433,13 @@ section .bg-white.rounded-2xl:hover{
   box-shadow:0 30px 60px -20px rgba(190,18,60,.3), inset 0 1px 0 #fff!important;
 }
 
-/* ---------- כותרות ---------- */
 section h2{
   background:linear-gradient(90deg,#1e1b4b,#be123c);
   -webkit-background-clip:text; background-clip:text;
   -webkit-text-fill-color:transparent;
   letter-spacing:-.01em;
 }
-section h2 .eng-tag{ -webkit-text-fill-color:#0f172a; }
 
-/* ---------- טאבים ---------- */
 .tab-btn{
   background:rgba(255,255,255,.7)!important;
   border:1px solid rgba(252,165,165,.45)!important;
@@ -342,7 +453,6 @@ section h2 .eng-tag{ -webkit-text-fill-color:#0f172a; }
   box-shadow:0 8px 20px -8px rgba(239,68,68,.35);
 }
 
-/* *** הטאב הפעיל – אדום בהיר *** */
 .tab-btn.active-tab,
 .tab-btn.active-tab:hover{
   background:linear-gradient(135deg,#fecaca 0%,#fca5a5 100%)!important;
@@ -352,13 +462,7 @@ section h2 .eng-tag{ -webkit-text-fill-color:#0f172a; }
   transform:translateX(-8px);
   box-shadow:0 12px 28px -8px rgba(248,113,113,.65), 0 0 0 4px rgba(254,202,202,.5)!important;
 }
-.tab-btn.active-tab .eng-tag{
-  background:rgba(255,255,255,.8)!important;
-  border-color:rgba(248,113,113,.6)!important;
-  color:var(--red-ink)!important;
-}
 
-/* ---------- תגיות אנגלית ---------- */
 .eng-tag{
   background:linear-gradient(180deg,#fff,#f1f5f9)!important;
   border:1px solid rgba(100,116,139,.35)!important;
@@ -369,7 +473,6 @@ section h2 .eng-tag{ -webkit-text-fill-color:#0f172a; }
   border-color:rgba(255,255,255,.4)!important;
 }
 
-/* ---------- כפתורים ---------- */
 main button.bg-sky-600, main button.bg-sky-500{
   background:linear-gradient(135deg,#0ea5e9,#6366f1)!important;
   border-radius:16px!important;
@@ -378,7 +481,6 @@ main button.bg-sky-600, main button.bg-sky-500{
 }
 main button.bg-sky-600:hover{ transform:translateY(-2px) scale(1.01); filter:brightness(1.08); }
 
-/* ---------- תשובות בחירה / מבדק ---------- */
 label.cursor-pointer{ border-radius:14px!important; transition:all .2s; }
 label.cursor-pointer:hover{
   background:#fff1f2!important;
@@ -387,7 +489,6 @@ label.cursor-pointer:hover{
 }
 input[type=radio]{ accent-color:#ef4444; }
 
-/* ---------- סימולטור ---------- */
 #sim-stage{
   background:
     radial-gradient(circle at 50% 50%, rgba(254,202,202,.5), transparent 60%),
@@ -397,22 +498,18 @@ input[type=radio]{ accent-color:#ef4444; }
 #node-SW{ box-shadow:0 0 0 8px rgba(251,191,36,.2), 0 0 40px rgba(251,191,36,.55)!important; }
 #animated-packet{ box-shadow:0 0 30px rgba(56,189,248,.7)!important; }
 
-/* ---------- חלון CMD ---------- */
 .cmd-window{
   border-radius:16px!important;
   border:1px solid #334155!important;
   box-shadow:0 25px 50px -15px rgba(0,0,0,.5)!important;
 }
 
-/* ---------- בוט עזר ---------- */
 #bot-fab{ box-shadow:0 0 0 6px rgba(254,202,202,.6), 0 18px 40px rgba(190,18,60,.4)!important; }
 #bot-panel > div{ border-radius:24px!important; border-color:var(--red-mid)!important; }
 
-/* ---------- סרגל גלילה ---------- */
 ::-webkit-scrollbar-thumb{ background:linear-gradient(#fca5a5,#a78bfa)!important; }
 ::-webkit-scrollbar-track{ background:#fff1f2!important; }
 
-/* ---------- כניסה חלקה בהחלפת טאב ---------- */
 .tab-content.active{ animation:rise .5s cubic-bezier(.2,.8,.2,1); }
 @keyframes rise{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none} }
 
@@ -431,13 +528,32 @@ input[type=radio]{ accent-color:#ef4444; }
 <div class="wrap">
 
 <header class="hero">
-  <div class="hero-text">
-    <div class="eyebrow"><span class="en-inline">Cyber Security Architecture · Layer 3 &amp; 4 Protection</span></div>
-    <h1 class="title">
-      <div>בקרת גישה מורחבת <span class="en-inline">(Extended ACL)</span></div>
+  <div class="header-inner">
+    <!-- קבוצה ימנית: אוואטר, תג, כותרת וסאבטייטל -->
+    <div class="header-main-group">
       <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" class="title-avatar" alt="Crazy Avatar">
-    </h1>
-    <p class="subtitle">הפוך למגן הרשת הארגונית. למד כיצד לסנן, לחסום ולאפשר תעבורה מדויקת על בסיס כתובות <span class="en-inline">IP</span> של מקור ויעד, סוג הפרוטוקול ומספרי הפורטים בשכבת התעבורה.</p>
+      <div class="header-text-content">
+        <div class="eyebrow" dir="ltr">Cyber Security Architecture · Layer 3 &amp; 4 Protection</div>
+        <div class="title-row">
+          <h1 class="title">בקרת גישה מורחבת <span class="en-inline">(Extended ACL)</span></h1>
+        </div>
+        <p class="subtitle">הפוך למגן הרשת הארגונית. למד לסנן, לחסום ולאפשר תעבורה על בסיס IP, פרוטוקול ופורטים.</p>
+      </div>
+    </div>
+
+    <!-- קבוצה שמאלית: תגיות פרוטוקולים וכפתורי ניווט בשורה אחת צפופה -->
+    <div class="header-actions-group">
+      <div class="protocol-row">
+        <span class="protocol-chip">ACL 100-199</span>
+        <span class="protocol-chip">TCP/UDP</span>
+        <span class="protocol-chip">PORTS</span>
+        <span class="protocol-chip">DORA</span>
+      </div>
+      <nav class="navbar" style="margin: 0;">
+        <a class="nav-btn outline" href="#s3">⚡ למעבדה</a>
+        <a class="nav-btn solid" href="https://gemini.google.com/gem/167016ac4a4b/66c3b83daa7940ef?usp=sharing" target="_blank" rel="noopener">אקדמיית סהר</a>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -583,7 +699,7 @@ input[type=radio]{ accent-color:#ef4444; }
     <hr style="border:0; border-top:1px solid var(--border); margin:8px 0; width:100%;">
     
     <div style="font-size:13px; font-weight:bold; color:var(--gold); margin-bottom:4px;">⚙️ שליטה בסימולציה:</div>
-    <button class="btn warning" id="pauseBtn" onclick="togglePauseSim()">⏸️️ השהה</button>
+    <button class="btn warning" id="pauseBtn" onclick="togglePauseSim()">⏸ השהה</button>
     <button class="btn secondary" onclick="resetAclSim()">אתחל מעבדה</button>
   </div>
 </div>
