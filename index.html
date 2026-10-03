@@ -25,13 +25,13 @@
 *{box-sizing:border-box;}
 body{
   margin:0; background:var(--bg); color:#1E293B;
-  font-family:'Rubik',sans-serif; line-height:1.6;
-  padding-bottom:140px;
+  font-family:'Rubik',sans-serif; line-height:1.5;
+  padding-bottom:60px;
 }
 .mono{font-family:'Fira Code',monospace;}
 .wrap{max-width:1100px; margin:0 auto; padding:0 20px;}
-h1,h2,h3{font-weight:700; margin:0 0 8px;}
-p{margin:0 0 12px; color:#475569;}
+h1,h2,h3{font-weight:700; margin:0 0 6px;}
+p{margin:0 0 8px; color:#475569;}
 
 .en-inline {
   direction: ltr;
@@ -47,17 +47,7 @@ p{margin:0 0 12px; color:#475569;}
   line-height: 1.5;
 }
 
-/* סרגל התקדמות עליון */
-.progressbar{position:sticky; top:0; z-index:150; background:rgba(18,24,36,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:14px 20px;}
-.progressbar-inner{max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:14px;}
-.progressbar-title{font-weight:700; font-size:15px; white-space:nowrap; color:#FFFFFF;}
-.steps{display:flex; gap:6px; flex:1;}
-.step{flex:1; height:6px; border-radius:4px; background:var(--panel3); position:relative; overflow:hidden;}
-.step.done{background:var(--acl-permit);}
-.step.active{background:var(--cyber-blue);}
-.progress-pct{font-size:13px; color:#94A3B8; font-family:'Fira Code',monospace; white-space:nowrap; direction: ltr;}
-
-/* ============ HEADER (קומפקטי, רציף ומסודר בלי רווחים מיותרים) ============ */
+/* ============ HEADER ============ */
 header.hero{
   padding: 10px 0 12px;
   border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -213,37 +203,43 @@ h1.title span{color:var(--cyber-purple); text-shadow:0 0 15px rgba(139,92,246,0.
   box-shadow: 0 4px 12px -3px rgba(139, 92, 246, 0.5);
 }
 
-section{padding:50px 0; border-top:1px solid rgba(0,0,0,0.08);}
-.section-head{margin-bottom:26px;}
-.section-num{font-family:'Fira Code',monospace; color:var(--cyber-purple); font-size:13px; margin-bottom:6px; font-weight:600; direction: ltr; display: inline-block;}
-.section-title{font-size:24px; color:#0F172A;}
+section{padding:20px 0; border-top:1px solid rgba(0,0,0,0.08);}
+.section-head{margin-bottom:14px;}
+.section-title{font-size:20px; color:#0F172A;}
 
-.card{background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:var(--radius); padding:24px;}
+.card{background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:var(--radius); padding:16px;}
 .card p{color:#94A3B8;}
-.grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
-@media(max-width:720px){.grid2{grid-template-columns:1fr;}}
 
-.concept-card{border-right:4px solid var(--cyber-purple); background:linear-gradient(to left, var(--panel), #141B29);}
-.tag{display:inline-block; font-family:'Fira Code',monospace; font-size:11px; padding:3px 8px; border-radius:6px; margin:2px 4px 2px 0;}
-.tag.deny{background:var(--acl-deny-dim); color:var(--acl-deny);}
-.tag.permit{background:var(--acl-permit-dim); color:var(--acl-permit);}
-.tag.purple{background:rgba(139,92,246,0.15); color:var(--cyber-purple);}
+.merged-box {
+  background: #FFFDF5;
+  border: 2px solid #E2D8B8;
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+.merged-box p {
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
 
-.accordion{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:12px;}
-.acc-head{padding:16px 18px; background:var(--panel); color:var(--text); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600;}
+.accordion{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:8px;}
+.acc-head{padding:12px 16px; background:var(--panel); color:var(--text); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600;}
 .acc-head:hover{background:var(--panel2);}
 .acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; background:var(--panel); color:var(--text);}
-.acc-body-inner{padding:0 18px 18px;}
-.acc-body-inner p{color:#94A3B8;}
+.acc-body-inner{padding:0 16px 12px;}
+.acc-body-inner p{color:#94A3B8; margin:0;}
 .accordion.open .acc-body{max-height:600px;}
 .acc-arrow{transition:transform .3s; color:#94A3B8;}
 .accordion.open .acc-arrow{transform:rotate(180deg);}
 
-/* פריסה של תרשים השרטוט לצד הכפתורים בחלק 3 */
+/* פריסה של תרשים השרטוט לצד הכפתורים */
 .sim-layout {
   display: grid;
   grid-template-columns: 1fr 280px;
-  gap: 20px;
+  gap: 16px;
   align-items: start;
 }
 @media (max-width: 900px) {
@@ -252,67 +248,66 @@ section{padding:50px 0; border-top:1px solid rgba(0,0,0,0.08);}
   }
 }
 
-.diagram-wrap{background:#070A10; border:2px solid var(--border); border-radius:var(--radius); padding:20px; overflow-x:auto; position:relative;}
+.diagram-wrap{background:#070A10; border:2px solid var(--border); border-radius:var(--radius); padding:16px; overflow-x:auto; position:relative;}
 .node-box{cursor:pointer; transition:transform 0.2s, opacity 0.15s;}
 .node-box:hover{opacity:0.95; transform:scale(1.01); fill-opacity:0.9;}
 
-/* פאנל כפתורים צדי בחלק 3 */
 .sim-controls-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   background: #0B0F19;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px;
+  padding: 14px;
 }
 .sim-controls-sidebar button.btn {
   width: 100%;
-  padding: 10px 12px;
+  padding: 8px 10px;
   font-size: 13px;
   text-align: center;
   white-space: normal;
   line-height: 1.3;
 }
 
-button.btn{background:var(--cyber-purple); color:#FFFFFF; border:none; border-radius:8px; padding:12px 22px; font-family:'Rubik'; font-weight:600; font-size:15px; cursor:pointer; transition:transform .1s, opacity .15s;}
+button.btn{background:var(--cyber-purple); color:#FFFFFF; border:none; border-radius:8px; padding:10px 18px; font-family:'Rubik'; font-weight:600; font-size:14px; cursor:pointer; transition:transform .1s, opacity .15s;}
 button.btn:hover{opacity:0.9; box-shadow:0 0 12px rgba(139,92,246,0.4);}
 button.btn:active{transform:scale(0.97);}
 button.btn.secondary{background:var(--panel3); color:var(--text); border:1px solid var(--border2);}
 button.btn.danger{background:var(--acl-deny);}
 button.btn.warning{background:var(--gold); color:#000;}
 
-.log-panel{background:#04060A; border:1px solid var(--border); border-radius:10px; margin-top:16px; padding:16px; font-family:'Fira Code',monospace; font-size:13px; max-height:240px; overflow-y:auto; color:#A1B0CB; border-left:3px solid var(--cyber-blue);}
-.log-line{margin-bottom:8px; animation:fadeIn .3s ease;}
+.log-panel{background:#04060A; border:1px solid var(--border); border-radius:10px; margin-top:12px; padding:12px; font-family:'Fira Code',monospace; font-size:12px; max-height:200px; overflow-y:auto; color:#A1B0CB; border-left:3px solid var(--cyber-blue);}
+.log-line{margin-bottom:6px; animation:fadeIn .3s ease;}
 .log-line .lbl{color:var(--cyber-purple); font-weight:bold;}
 
 .terminal{
   background:#05070B; 
   border:1px solid var(--cyber-purple); 
   border-radius:10px; 
-  padding:18px; 
+  padding:14px; 
   font-family:'Fira Code',monospace; 
   font-size:13px; 
   box-shadow:0 4px 20px rgba(0,0,0,0.5);
   direction: ltr;
   text-align: left;
 }
-.term-topbar{display:flex; gap:6px; margin-bottom:12px; align-items:center; direction: ltr;}
+.term-topbar{display:flex; gap:6px; margin-bottom:8px; align-items:center; direction: ltr;}
 .dot{width:10px; height:10px; border-radius:50%;}
 .dot.r{background:#EF4444;} .dot.y{background:#F59E0B;} .dot.g{background:#10B981;}
 .term-output{
   white-space:pre-wrap; 
   color:#94A3B8; 
-  margin-bottom:10px; 
-  min-height:60px; 
-  line-height:1.7;
+  margin-bottom:8px; 
+  min-height:50px; 
+  line-height:1.6;
   direction: ltr;
   text-align: left;
 }
 .term-output .ok{color:#10B981; font-weight:bold;}
 .term-output .bad{color:#EF4444; font-weight:bold;}
 .term-output .hint{color:#F59E0B; direction: rtl; display: block; text-align: right;}
-.term-input-row{display:flex; align-items:center; gap:6px; border-top:1px solid var(--border); padding-top:12px; direction: ltr;}
+.term-input-row{display:flex; align-items:center; gap:6px; border-top:1px solid var(--border); padding-top:10px; direction: ltr;}
 .prompt{color:#10B981; white-space:nowrap; direction: ltr;}
 input.term-input{
   flex:1; 
@@ -326,32 +321,32 @@ input.term-input{
   text-align: left;
 }
 
-.task-box{background:var(--panel2); color:var(--text); border:1px solid var(--border2); border-radius:10px; padding:14px 16px; margin-bottom:14px;}
-.task-title{font-weight:600; margin-bottom:4px; color:var(--gold);}
+.task-box{background:var(--panel2); color:var(--text); border:1px solid var(--border2); border-radius:10px; padding:10px 14px; margin-bottom:10px;}
+.task-title{font-weight:600; margin-bottom:2px; color:var(--gold);}
 .task-progress{font-family:'Fira Code',monospace; font-size:12px; color:#94A3B8; direction: ltr; display: inline-block;}
 
 /* מערכת חידון */
-.quiz-q{background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px;}
-.quiz-q-num{font-family:'Fira Code',monospace; color:var(--cyber-purple); font-size:12px; margin-bottom:6px; font-weight:600; direction: ltr; display: inline-block;}
-.quiz-opts{display:flex; flex-direction:column; gap:10px; margin-top:14px;}
-.quiz-opt{background:var(--panel3); border:1px solid var(--border2); border-radius:8px; padding:14px; cursor:pointer; text-align:right; font-size:14px; transition:all 0.15s;}
+.quiz-q{background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:12px;}
+.quiz-q-num{font-family:'Fira Code',monospace; color:var(--cyber-purple); font-size:12px; margin-bottom:4px; font-weight:600; direction: ltr; display: inline-block;}
+.quiz-opts{display:flex; flex-direction:column; gap:8px; margin-top:10px;}
+.quiz-opt{background:var(--panel3); border:1px solid var(--border2); border-radius:8px; padding:10px 12px; cursor:pointer; text-align:right; font-size:13px; transition:all 0.15s;}
 .quiz-opt:hover{border-color:#94A3B8; background:var(--panel2);}
 .quiz-opt.correct{background:rgba(16,185,129,0.15); border-color:var(--acl-permit); color:var(--acl-permit); font-weight:600;}
 .quiz-opt.wrong{background:rgba(239,68,68,0.15); border-color:var(--acl-deny); color:var(--acl-deny); font-weight:600;}
 .quiz-opt.disabled{pointer-events:none;}
-.quiz-explain{margin-top:12px; padding:12px; background:var(--panel2); border-radius:8px; font-size:13px; display:none; border-right:3px solid var(--gold); color:#94A3B8;}
+.quiz-explain{margin-top:10px; padding:10px; background:var(--panel2); border-radius:8px; font-size:12px; display:none; border-right:3px solid var(--gold); color:#94A3B8;}
 .quiz-explain.show{display:block;}
 
 .score-box {
   background: linear-gradient(135deg, #1C2336, #252F48);
   border: 2px solid var(--cyber-purple);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: 16px;
   text-align: center;
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 /* אזור למורה */
@@ -359,8 +354,8 @@ input.term-input{
   background: linear-gradient(135deg, #1E1B4B, #311042);
   border: 2px dashed var(--cyber-purple);
   border-radius: var(--radius);
-  padding: 20px;
-  margin-top: 30px;
+  padding: 16px;
+  margin-top: 20px;
   color: #FFF;
   cursor: pointer;
   transition: all 0.3s;
@@ -370,10 +365,10 @@ input.term-input{
   box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
 }
 
-.completion{text-align:center; padding:50px 20px; background:linear-gradient(135deg, #111827, #062F22); color:#FFFFFF; border:2px solid var(--acl-permit); border-radius:var(--radius); display:none; margin-top:30px; box-shadow:0 0 20px rgba(16,185,129,0.2);}
+.completion{text-align:center; padding:30px 20px; background:linear-gradient(135deg, #111827, #062F22); color:#FFFFFF; border:2px solid var(--acl-permit); border-radius:var(--radius); display:none; margin-top:20px; box-shadow:0 0 20px rgba(16,185,129,0.2);}
 .completion.show{display:block;}
 
-.footer-note{text-align:center; color:#64748B; font-size:12px; margin-top:60px;}
+.footer-note{text-align:center; color:#64748B; font-size:12px; margin-top:30px;}
 ::-webkit-scrollbar{width:8px; height:8px;}
 ::-webkit-scrollbar-thumb{background:var(--border2); border-radius:4px;}
 @keyframes fadeIn { from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);} }
@@ -440,29 +435,6 @@ section h2{
   letter-spacing:-.01em;
 }
 
-.tab-btn{
-  background:rgba(255,255,255,.7)!important;
-  border:1px solid rgba(252,165,165,.45)!important;
-  border-radius:18px!important;
-  color:#334155!important;
-  transition:transform .25s, box-shadow .25s, background .25s!important;
-}
-.tab-btn:hover{
-  transform:translateX(-5px);
-  background:rgba(254,226,226,.8)!important;
-  box-shadow:0 8px 20px -8px rgba(239,68,68,.35);
-}
-
-.tab-btn.active-tab,
-.tab-btn.active-tab:hover{
-  background:linear-gradient(135deg,#fecaca 0%,#fca5a5 100%)!important;
-  color:var(--red-ink)!important;
-  border:1px solid #f87171!important;
-  font-weight:800!important;
-  transform:translateX(-8px);
-  box-shadow:0 12px 28px -8px rgba(248,113,113,.65), 0 0 0 4px rgba(254,202,202,.5)!important;
-}
-
 .eng-tag{
   background:linear-gradient(180deg,#fff,#f1f5f9)!important;
   border:1px solid rgba(100,116,139,.35)!important;
@@ -480,14 +452,6 @@ main button.bg-sky-600, main button.bg-sky-500{
   transition:transform .2s, filter .2s;
 }
 main button.bg-sky-600:hover{ transform:translateY(-2px) scale(1.01); filter:brightness(1.08); }
-
-label.cursor-pointer{ border-radius:14px!important; transition:all .2s; }
-label.cursor-pointer:hover{
-  background:#fff1f2!important;
-  border-color:var(--red-mid)!important;
-  transform:translateX(-4px);
-}
-input[type=radio]{ accent-color:#ef4444; }
 
 #sim-stage{
   background:
@@ -510,20 +474,9 @@ input[type=radio]{ accent-color:#ef4444; }
 ::-webkit-scrollbar-thumb{ background:linear-gradient(#fca5a5,#a78bfa)!important; }
 ::-webkit-scrollbar-track{ background:#fff1f2!important; }
 
-.tab-content.active{ animation:rise .5s cubic-bezier(.2,.8,.2,1); }
-@keyframes rise{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none} }
-
 </style>
 </head>
 <body>
-
-<div class="progressbar">
-  <div class="progressbar-inner">
-    <div class="progressbar-title">🛡️ מערך אבטחה: <span class="en-inline">Extended ACL</span></div>
-    <div class="steps" id="stepsBar"></div>
-    <div class="progress-pct" id="progressPct">0%</div>
-  </div>
-</div>
 
 <div class="wrap">
 
@@ -559,27 +512,18 @@ input[type=radio]{ accent-color:#ef4444; }
 
 <section id="s1">
 <div class="section-head">
-  <div class="section-num">01 — חוקי הסינון המתקדמים</div>
   <h2 class="section-title">הכוח שבדיוק: מהי רשימת גישה מורחבת?</h2>
 </div>
 
-<div class="grid2">
-  <div class="card concept-card">
-    <h3>🎯 יכולות הסינון המורחב</h3>
-    <p><span class="tag purple"><span class="en-inline">100-199</span></span> טווח ה-<span class="en-inline">ACL</span> הקלאסי ב-<span class="en-inline">Cisco</span> עבור רשימות מורחבות.</p>
-    <p><span class="tag permit">בקרת שכבה 4</span> היכולת לסנן לפי פרוטוקולי <span class="en-inline">TCP</span> ו-<span class="en-inline">UDP</span> ולפי פורטים ספציפיים (כמו 80, 443, 22, 23).</p>
-  </div>
-  <div class="card concept-card">
-    <h3>⚡ סדר החוקים והחוק הסמוי</h3>
-    <p><span class="tag deny"><span class="en-inline">Implicit Deny</span></span> כל חבילה שלא תואמת אף חוק ברשימה – <b>נחסמת אוטומטית</b> בסוף הדרך!</p>
-    <p><span class="tag purple"><span class="en-inline">First Match Win</span></span> הנתב קורא מלמעלה למטה; החוק הראשון שתואם לחבילה מופעל מיד, והסריקה נפסקת.</p>
-  </div>
+<div class="merged-box">
+  <p>
+    רשימת גישה מורחבת (<span class="en-inline">Extended ACL 100-199</span>) מעניקה יכולת סינון מתקדמת בשכבה 4 לפי פרוטוקולי <span class="en-inline">TCP/UDP</span> ופורטים ספציפיים. הנתב קורא את החוקים מלמעלה למטה, והחוק הראשון שתואם מופעל מיד (<span class="en-inline">First Match Win</span>). לבסוף, כל חבילה שלא תאמה אף חוק ברשימה נחסמת אוטומטית עקב חוק החסימה הסמוי (<span class="en-inline">Implicit Deny</span>).
+  </p>
 </div>
 </section>
 
 <section id="s2">
 <div class="section-head">
-  <div class="section-num">02 — ארכיטקטורת חוקים נכונה</div>
   <h2 class="section-title">שאלות קריטיות בעיצוב חומת אש</h2>
 </div>
 
@@ -600,16 +544,15 @@ input[type=radio]{ accent-color:#ef4444; }
 
 <section id="s3">
 <div class="section-head">
-  <div class="section-num">03 — סימולטור הגנה דינמי</div>
   <h2 class="section-title">הגדר מדיניות, צפה בחוקים והרצ חבילות בזמן אמת</h2>
 </div>
 
 <!-- חלונית בחירת תרחיש ACL -->
-<div class="card concept-card" style="margin-bottom:20px;">
+<div class="card concept-card" style="margin-bottom:14px;">
   <h3 style="color:var(--gold);">1️⃣ בחר מדיניות אבטחה ליישום בנתב:</h3>
-  <p style="font-size:14px;">בחר אחד מ-10 תרחישי האבטחה הבאים כדי לטעון אותו לנתב הליבה:</p>
+  <p style="font-size:13px;">בחר אחד מ-10 תרחישי האבטחה הבאים כדי לטעון אותו לנתב הליבה:</p>
   
-  <select id="aclScenarioSelect" class="mono" onchange="changeScenario()" style="width:100%; padding:12px; background:var(--panel2); color:#FFF; border:1px solid var(--cyber-purple); border-radius:8px; font-size:14px; cursor:pointer;">
+  <select id="aclScenarioSelect" class="mono" onchange="changeScenario()" style="width:100%; padding:10px; background:var(--panel2); color:#FFF; border:1px solid var(--cyber-purple); border-radius:8px; font-size:13px; cursor:pointer;">
     <option value="0">תרחיש 1: חסימת SSH מורשת אורחים בלבד (ברירת מחדל)</option>
     <option value="1">תרחיש 2: חסימת גלישת Web (Port 80) מרשת אורחים</option>
     <option value="2">תרחיש 3: חסימה מוחלטת (Deny IP) של רשת האורחים לחוות השרתים</option>
@@ -623,15 +566,15 @@ input[type=radio]{ accent-color:#ef4444; }
   </select>
 
   <!-- חלונית הצגת פקודות ה-ACL שהוגדרו -->
-  <div style="margin-top:16px; background:#05070B; border:1px solid var(--border2); border-radius:8px; padding:14px;">
-    <div style="font-size:12px; color:var(--cyber-purple); font-weight:bold; margin-bottom:6px;">📄 רשימת בקרת הגישה המופעלת כעת בנתב (<span class="en-inline">Router_Core</span>):</div>
-    <pre id="aclCodeDisplay" class="mono" style="margin:0; color:#10B981; font-size:13px; line-height:1.5; white-space:pre-wrap;" dir="ltr"></pre>
+  <div style="margin-top:12px; background:#05070B; border:1px solid var(--border2); border-radius:8px; padding:10px;">
+    <div style="font-size:12px; color:var(--cyber-purple); font-weight:bold; margin-bottom:4px;">📄 רשימת בקרת הגישה המופעלת כעת בנתב (<span class="en-inline">Router_Core</span>):</div>
+    <pre id="aclCodeDisplay" class="mono" style="margin:0; color:#10B981; font-size:12px; line-height:1.4; white-space:pre-wrap;" dir="ltr"></pre>
   </div>
 </div>
 
 <p>2️⃣ כעת, תרגל שילוח חבילות מהכפתורים לצד התרשים ובדוק כיצד הנתב מגיב לחוק הטעון:</p>
 
-<div class="sim-layout" style="margin-top: 20px;">
+<div class="sim-layout" style="margin-top: 14px;">
   <!-- התרשים הדינמי -->
   <div class="diagram-wrap">
     <svg id="aclDiagram" viewBox="0 0 1000 520" style="width:100%; display:block;">
@@ -691,21 +634,21 @@ input[type=radio]{ accent-color:#ef4444; }
 
   <!-- סרגל כפתורי שליטה צדי וצר -->
   <div class="sim-controls-sidebar">
-    <div style="font-size:13px; font-weight:bold; color:var(--cyber-purple); margin-bottom:4px;">🕹️ שילוח חבילות:</div>
+    <div style="font-size:12px; font-weight:bold; color:var(--cyber-purple); margin-bottom:2px;">🕹️ שילוח חבילות:</div>
     <button class="btn" onclick="triggerAclTest('Mgmt-SSH')">הנהלה ➔ שרת<br>(<span class="en-inline">SSH - Port 22</span>) 🔐</button>
     <button class="btn" onclick="triggerAclTest('Guest-Web')">אורחים ➔ שרת<br>(<span class="en-inline">Web - Port 80</span>) 🌐</button>
     <button class="btn danger" onclick="triggerAclTest('Guest-SSH')">אורחים ➔ שרת<br>(<span class="en-inline">SSH - Port 22</span>) ❌</button>
     
-    <hr style="border:0; border-top:1px solid var(--border); margin:8px 0; width:100%;">
+    <hr style="border:0; border-top:1px solid var(--border); margin:6px 0; width:100%;">
     
-    <div style="font-size:13px; font-weight:bold; color:var(--gold); margin-bottom:4px;">⚙️ שליטה בסימולציה:</div>
+    <div style="font-size:12px; font-weight:bold; color:var(--gold); margin-bottom:2px;">⚙️ שליטה בסימולציה:</div>
     <button class="btn warning" id="pauseBtn" onclick="togglePauseSim()">⏸ השהה</button>
     <button class="btn secondary" onclick="resetAclSim()">אתחל מעבדה</button>
   </div>
 </div>
 
-<div style="margin-top:16px;">
-  <div id="aclInfo" style="color:#475569; font-size:14px; font-weight:600; margin-bottom:8px;">מערכת מוכנה לבדיקה. לחץ על אחד הכפתורים לשילוח חבילה...</div>
+<div style="margin-top:12px;">
+  <div id="aclInfo" style="color:#475569; font-size:13px; font-weight:600; margin-bottom:6px;">מערכת מוכנה לבדיקה. לחץ על אחד הכפתורים לשילוח חבילה...</div>
   <div class="log-panel" id="aclLog" style="margin-top:0;">
     <div class="log-line">מערך חומת האש מוכן. ממתין לחבילות מידע ראשוניות.</div>
   </div>
@@ -714,7 +657,6 @@ input[type=radio]{ accent-color:#ef4444; }
 
 <section id="s4">
 <div class="section-head">
-  <div class="section-num">04 — זירת הפיקוד המעשית (<span class="en-inline">CLI</span>)</div>
   <h2 class="section-title">כתוב את פקודות ההגנה בנתב הארגוני</h2>
 </div>
 <p>המשימה: הגדר רשימת גישה מספר 101 שתחסום לחלוטין גישת <span class="en-inline">SSH</span> (פורט 22) מרשת האורחים (<span class="en-inline">10.20.20.0/24</span>) לחוות השרתים, אך תאשר להם גלישת אינטרנט (פורט 80).</p>
@@ -741,13 +683,12 @@ Core-Router(config)# <span class="hint" dir="rtl">שלב 1: הקלד את חוק
 
 <section id="s5">
 <div class="section-head">
-  <div class="section-num">05 — מבחן הסמכת סייבר (10 שאלות)</div>
   <h2 class="section-title">הוכח הבנה ארכיטקטונית ומעשית</h2>
 </div>
 
 <!-- חלונית הצגת ציון -->
 <div id="scoreBox" class="score-box" style="display:none;">
-  ענית על כל השאלות! הציון שלך במבחן ההסמכה: <span id="userScore" style="color:var(--gold); font-size:28px;">0%</span>
+  ענית על כל השאלות! הציון שלך במבחן ההסמכה: <span id="userScore" style="color:var(--gold); font-size:24px;">0%</span>
 </div>
 
 <div id="quizContainer"></div>
@@ -756,10 +697,10 @@ Core-Router(config)# <span class="hint" dir="rtl">שלב 1: הקלד את חוק
 <div class="teacher-zone" onclick="openTeacherModal()">
   <div style="display:flex; align-items:center; justify-content:between;">
     <div>
-      <h3 style="margin:0; color:var(--gold); font-size:18px;">👨‍🏫 חלונית למורה / מדריך סייבר</h3>
-      <p style="margin:4px 0 0; font-size:13px; color:#CBD5E1;">לחץ כאן והזן סיסמה כדי לצפות בתשובות הנכונות ובהסברים המלאים למבחן.</p>
+      <h3 style="margin:0; color:var(--gold); font-size:16px;">👨‍🏫 חלונית למורה / מדריך סייבר</h3>
+      <p style="margin:2px 0 0; font-size:12px; color:#CBD5E1;">לחץ כאן והזן סיסמה כדי לצפות בתשובות הנכונות ובהסברים המלאים למבחן.</p>
     </div>
-    <div style="font-size:24px;">🔑</div>
+    <div style="font-size:20px;">🔑</div>
   </div>
 </div>
 </section>
@@ -829,41 +770,6 @@ Core-Router(config)# <span class="hint" dir="rtl">שלב 1: הקלד את חוק
 </div>
 
 <script>
-const PROGRESS_KEY = "acl_progress_v1";
-const stepIds = ["s1","s2","s3","s4","s5"];
-let progress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}");
-
-function renderStepsBar(){
-  const bar = document.getElementById("stepsBar");
-  if(!bar) return;
-  bar.innerHTML = "";
-  stepIds.forEach(id=>{
-    const d = document.createElement("div");
-    d.className = "step" + (progress[id] ? " done" : "");
-    bar.appendChild(d);
-  });
-  const done = stepIds.filter(id=>progress[id]).length;
-  document.getElementById("progressPct").textContent = Math.round(done/stepIds.length*100) + "%";
-  if(done === stepIds.length){
-    document.getElementById("completionBox").classList.add("show");
-  }
-}
-function markDone(id){
-  progress[id] = true;
-  localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
-  renderStepsBar();
-}
-renderStepsBar();
-
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting && e.intersectionRatio > 0.4){
-      markDone(e.target.id);
-    }
-  });
-}, {threshold:0.4});
-stepIds.forEach(id=>{ const el = document.getElementById(id); if(el) io.observe(el); });
-
 function toggleAcc(id){
   document.getElementById(id).classList.toggle("open");
 }
@@ -1021,8 +927,6 @@ async function triggerAclTest(type) {
     document.getElementById("aclPacket").style.display = "none";
     log(`<span class='lbl'>[תוצאה]</span> החיבור נחסם על ידי ה-ACL המופעל בנתב.`);
   }
-
-  markDone("s3");
 }
 
 function log(text){
@@ -1063,7 +967,6 @@ function submitAclCmd() {
     } else {
       document.getElementById("taskProgress").textContent = "בוצע בהצלחה מלאה! ✅";
       output.innerHTML += "\nCore-Router(config-if)# ip access-group 101 in\n<span class='ok'>🏆 חומת האש הופעלה וננעלה בכניסת הממשק!</span>";
-      markDone("s4");
     }
   } else {
     output.innerHTML += "\n" + prompt + " " + val + "\n<span class='bad'>✘ טעות בתחביר פקודת ה-ACL הארגונית. בדוק רווחים, מספרי פורטים ומסכות הפוכות ונסה שוב.</span>";
@@ -1229,7 +1132,6 @@ function answerQuiz(qi, oi){
   
   if(Object.keys(userAnswers).length === quizData.length){
     calculateScore();
-    markDone("s5");
   }
 }
 
@@ -1241,6 +1143,7 @@ function calculateScore(){
   const pct = Math.round((correctCount / quizData.length) * 100);
   document.getElementById("userScore").textContent = pct + "% (" + correctCount + "/" + quizData.length + " תשובות נכונות)";
   document.getElementById("scoreBox").style.display = "block";
+  document.getElementById("completionBox").classList.add("show");
 }
 
 /* מנגנון חלונית המורה והסיסמה */
